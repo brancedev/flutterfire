@@ -254,7 +254,18 @@ int nextHandle = 0;
     [[self getAuth:call.arguments].currentUser
         linkAndRetrieveDataWithCredential:[self getCredential:call.arguments]
                                completion:^(FIRAuthDataResult *authResult, NSError *error) {
-                                 [self sendResult:result forAuthDataResult:authResult error:error];
+                                 if (error != nil && error.userInfo[FIRAuthErrorUserInfoUpdatedCredentialKey] != nil) {
+                                   FIRAuthCredential *updatedCredential = error.userInfo[FIRAuthErrorUserInfoUpdatedCredentialKey];
+                                   [[self getAuth:call.arguments]
+                                      signInAndRetrieveDataWithCredential:updatedCredential
+                                                              completion:^(FIRAuthDataResult *authResult, NSError *error) {
+                                                                [self sendResult:result
+                                                                    forAuthDataResult:authResult
+                                                                                error:error];
+                                                              }];
+                                 } else {
+                                   [self sendResult:result forAuthDataResult:authResult error:error];
+                                 }
                                }];
   } else if ([@"unlinkFromProvider" isEqualToString:call.method]) {
     NSString *provider = call.arguments[@"provider"];
@@ -449,9 +460,14 @@ int nextHandle = 0;
 
 - (void)sendResult:(FlutterResult)result forObject:(NSObject *)object error:(NSError *)error {
   if (error != nil) {
+    NSDictionary *details = [NSMutableDictionary dictionary];
+    if (error.userInfo[FIRAuthErrorUserInfoEmailKey] != nil) {
+        [details setValue:error.userInfo[FIRAuthErrorUserInfoEmailKey]
+                    forKey:@"email"];
+    }
     result([FlutterError errorWithCode:getFlutterErrorCode(error)
                                message:error.localizedDescription
-                               details:nil]);
+                               details:details]);
   } else if (object == nil) {
     result(nil);
   } else {
