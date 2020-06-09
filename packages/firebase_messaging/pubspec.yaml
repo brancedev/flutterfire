@@ -18,6 +18,9 @@ dependencies:
   platform: ^2.0.0
   flutter:
     sdk: flutter
+  iterable:
+    git:
+      url: git@github.com:brancedev/iterable-flutter-sdk.git
 
 dev_dependencies:
   pedantic: ^1.8.0

@@ -15,6 +15,8 @@ import android.util.Log;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.iterable.iterableapi.IterableFirebaseMessagingService;
+
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.view.FlutterCallbackInformation;
@@ -85,6 +87,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
    */
   @Override
   public void onMessageReceived(final RemoteMessage remoteMessage) {
+    IterableFirebaseMessagingService.handleMessageReceived(this, remoteMessage);
     // If application is running in the foreground use local broadcast to handle message.
     // Otherwise use the background isolate to handle message.
     if (isApplicationForeground(this)) {
@@ -124,6 +127,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
    */
   @Override
   public void onNewToken(String token) {
+    IterableFirebaseMessagingService.handleTokenRefresh();
     Intent intent = new Intent(ACTION_TOKEN);
     intent.putExtra(EXTRA_TOKEN, token);
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
