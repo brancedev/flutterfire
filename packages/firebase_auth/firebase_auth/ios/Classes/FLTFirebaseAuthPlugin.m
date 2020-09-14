@@ -698,20 +698,34 @@ NSString *const kErrMsgInvalidCredential =
 
 - (void)userSendEmailVerification:(id)arguments
              withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
-  FIRAuth *auth = [self getFIRAuthFromArguments:arguments];
-  FIRUser *currentUser = auth.currentUser;
-  if (currentUser == nil) {
-    result.error(kErrCodeNoCurrentUser, kErrMsgNoCurrentUser, nil, nil);
-    return;
-  }
-
-  [currentUser sendEmailVerificationWithCompletion:^(NSError *_Nullable error) {
-    if (error != nil) {
-      result.error(nil, nil, nil, error);
-    } else {
-      result.success(nil);
+    FIRAuth *auth = [self getFIRAuthFromArguments:arguments];
+    FIRUser *currentUser = auth.currentUser;
+    if (currentUser == nil) {
+        result.error(kErrCodeNoCurrentUser, kErrMsgNoCurrentUser, nil, nil);
+        return;
     }
-  }];
+    
+    FIRActionCodeSettings *actionCodeSettings =
+    [self getFIRActionCodeSettingsFromArguments:arguments];
+    if (actionCodeSettings == nil) {
+        [currentUser sendEmailVerificationWithCompletion:^(NSError *_Nullable error) {
+            if (error != nil) {
+                result.error(nil, nil, nil, error);
+            } else {
+                result.success(nil);
+            }
+        }];
+        return;
+    }
+    
+    [currentUser sendEmailVerificationWithActionCodeSettings:actionCodeSettings
+                                                  completion:^(NSError *_Nullable error) {
+        if (error != nil) {
+            result.error(nil, nil, nil, error);
+        } else {
+            result.success(nil);
+        }
+    }];
 }
 
 - (void)userUnlink:(id)arguments withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
