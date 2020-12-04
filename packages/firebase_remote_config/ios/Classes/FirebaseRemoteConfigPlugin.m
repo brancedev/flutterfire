@@ -40,19 +40,15 @@
         initWithLong:(long)[[remoteConfig lastFetchTime] timeIntervalSince1970] * 1000];
     resultDict[@"lastFetchStatus"] =
         [self mapLastFetchStatus:(FIRRemoteConfigFetchStatus)[remoteConfig lastFetchStatus]];
-    resultDict[@"inDebugMode"] =
-        [[NSNumber alloc] initWithBool:[firRemoteConfigSettings isDeveloperModeEnabled]];
 
     resultDict[@"parameters"] = [self getConfigParameters];
 
     result(resultDict);
   } else if ([@"RemoteConfig#setConfigSettings" isEqualToString:call.method]) {
-    FIRRemoteConfig *remoteConfig = [FIRRemoteConfig remoteConfig];
-    bool debugMode = (bool)call.arguments[@"debugMode"];
-    FIRRemoteConfigSettings *remoteConfigSettings =
-        [[FIRRemoteConfigSettings alloc] initWithDeveloperModeEnabled:debugMode];
-    [remoteConfig setConfigSettings:remoteConfigSettings];
-    result(nil);
+      FIRRemoteConfig *remoteConfig = [FIRRemoteConfig remoteConfig];
+      FIRRemoteConfigSettings *remoteConfigSettings = [FIRRemoteConfigSettings new];
+      [remoteConfig setConfigSettings:remoteConfigSettings];
+      result(nil);
   } else if ([@"RemoteConfig#fetch" isEqualToString:call.method]) {
     FIRRemoteConfig *remoteConfig = [FIRRemoteConfig remoteConfig];
     long expiration = (long)call.arguments[@"expiration"];
@@ -97,12 +93,13 @@
                     }
                   }];
   } else if ([@"RemoteConfig#activate" isEqualToString:call.method]) {
-    BOOL newConfig = [[FIRRemoteConfig remoteConfig] activateFetched];
-    NSDictionary *parameters = [self getConfigParameters];
-    NSMutableDictionary *resultDict = [[NSMutableDictionary alloc] init];
-    resultDict[@"newConfig"] = [NSNumber numberWithBool:newConfig];
-    resultDict[@"parameters"] = parameters;
-    result(resultDict);
+      [[FIRRemoteConfig remoteConfig] activateWithCompletion:^(BOOL changed, NSError * _Nullable error) {
+          NSDictionary *parameters = [self getConfigParameters];
+          NSMutableDictionary *resultDict = [[NSMutableDictionary alloc] init];
+          resultDict[@"newConfig"] = [NSNumber numberWithBool:changed];
+          resultDict[@"parameters"] = parameters;
+          result(resultDict);
+      }];
   } else if ([@"RemoteConfig#setDefaults" isEqualToString:call.method]) {
     FIRRemoteConfig *remoteConfig = [FIRRemoteConfig remoteConfig];
     NSDictionary *defaults = call.arguments[@"defaults"];
@@ -128,8 +125,7 @@
     parameterDict[key] = [self createRemoteConfigValueDict:[remoteConfig configValueForKey:key]];
   }
   // Add default parameters if missing since `keysWithPrefix` does not return default keys.
-  NSArray *defaultKeys = [remoteConfig allKeysFromSource:FIRRemoteConfigSourceDefault
-                                               namespace:FIRNamespaceGoogleMobilePlatform];
+  NSArray *defaultKeys = [remoteConfig allKeysFromSource:FIRRemoteConfigSourceDefault];
   for (NSString *key in defaultKeys) {
     if ([parameterDict valueForKey:key] == nil) {
       parameterDict[key] = [self createRemoteConfigValueDict:[remoteConfig configValueForKey:key]];
