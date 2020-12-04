@@ -252,9 +252,12 @@ static NSObject<FlutterPluginRegistrar> *_registrar;
 - (BOOL)application:(UIApplication *)application
     didReceiveRemoteNotification:(NSDictionary *)userInfo
           fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler {
-  [self didReceiveRemoteNotification:userInfo];
-  completionHandler(UIBackgroundFetchResultNoData);
-  return YES;
+  if (userInfo[kGCMMessageIDKey]) {
+    [self didReceiveRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNoData);
+    return YES;
+  }
+  return NO;
 }
 
 - (void)application:(UIApplication *)application

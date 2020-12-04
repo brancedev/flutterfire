@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/services.dart';
@@ -108,7 +109,8 @@ class FirebaseMessaging {
     _onResume = onResume;
     _channel.setMethodCallHandler(_handleMethod);
     _channel.invokeMethod<void>('configure');
-    if (onBackgroundMessage != null) {
+    //add the platform check, because iOS has no FcmDartService#start method implemented
+    if (onBackgroundMessage != null && Platform.isAndroid) {
       _onBackgroundMessage = onBackgroundMessage;
       final CallbackHandle backgroundSetupHandle =
           PluginUtilities.getCallbackHandle(_fcmSetupBackgroundChannel);
