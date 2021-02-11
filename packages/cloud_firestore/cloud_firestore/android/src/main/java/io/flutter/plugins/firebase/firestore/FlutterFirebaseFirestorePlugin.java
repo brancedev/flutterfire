@@ -172,7 +172,11 @@ public class FlutterFirebaseFirestorePlugin
                 Map<String, Integer> data = new HashMap<>();
                 data.put("handle", handle);
                 activity.runOnUiThread(
-                    () -> channel.invokeMethod("Firestore#snapshotsInSync", data));
+                    () -> {
+                      if (channel == null) return;
+                      channel.invokeMethod("Firestore#snapshotsInSync", data);
+                    }
+                );
               };
 
           listenerRegistrations.put(
@@ -303,6 +307,8 @@ public class FlutterFirebaseFirestorePlugin
               query.addSnapshotListener(
                   metadataChanges,
                   (querySnapshot, exception) -> {
+                    if (channel == null) return;
+
                     Map<String, Object> querySnapshotMap = new HashMap<>();
 
                     querySnapshotMap.put("handle", handle);
@@ -363,6 +369,8 @@ public class FlutterFirebaseFirestorePlugin
               documentReference.addSnapshotListener(
                   metadataChanges,
                   (documentSnapshot, exception) -> {
+                    if (channel == null) return;
+                    
                     Map<String, Object> eventMap = new HashMap<>();
 
                     eventMap.put("handle", handle);

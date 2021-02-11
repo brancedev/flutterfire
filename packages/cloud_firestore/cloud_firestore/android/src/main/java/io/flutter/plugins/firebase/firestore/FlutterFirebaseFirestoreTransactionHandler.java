@@ -78,36 +78,39 @@ class FlutterFirebaseFirestoreTransactionHandler {
           }
 
           Runnable runnable =
-              () ->
-                  channel.invokeMethod(
-                      "Transaction#attempt",
-                      arguments,
-                      new MethodChannel.Result() {
-                        @Override
-                        @SuppressWarnings("unchecked")
-                        public void success(@Nullable Object result) {
-                          completionSource.trySetResult((Map<String, Object>) result);
-                        }
+              () -> {
+                if (channel == null) return;
+                
+                channel.invokeMethod(
+                    "Transaction#attempt",
+                    arguments,
+                    new MethodChannel.Result() {
+                      @Override
+                      @SuppressWarnings("unchecked")
+                      public void success(@Nullable Object result) {
+                        completionSource.trySetResult((Map<String, Object>) result);
+                      }
 
-                        @Override
-                        public void error(
-                            String errorCode,
-                            @Nullable String errorMessage,
-                            @Nullable Object errorDetails) {
-                          completionSource.trySetException(
-                              new FirebaseFirestoreException(
-                                  "Transaction#attempt error: " + errorMessage,
-                                  FirebaseFirestoreException.Code.ABORTED));
-                        }
+                      @Override
+                      public void error(
+                          String errorCode,
+                          @Nullable String errorMessage,
+                          @Nullable Object errorDetails) {
+                        completionSource.trySetException(
+                            new FirebaseFirestoreException(
+                                "Transaction#attempt error: " + errorMessage,
+                                FirebaseFirestoreException.Code.ABORTED));
+                      }
 
-                        @Override
-                        public void notImplemented() {
-                          completionSource.trySetException(
-                              new FirebaseFirestoreException(
-                                  "Transaction#attempt: Not implemented",
-                                  FirebaseFirestoreException.Code.ABORTED));
-                        }
-                      });
+                      @Override
+                      public void notImplemented() {
+                        completionSource.trySetException(
+                            new FirebaseFirestoreException(
+                                "Transaction#attempt: Not implemented",
+                                FirebaseFirestoreException.Code.ABORTED));
+                      }
+                    });
+                  };
 
           activityRef.get().runOnUiThread(runnable);
 
