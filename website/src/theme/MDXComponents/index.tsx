@@ -1,10 +1,10 @@
 import React, { HTMLProps } from 'react';
 import Link from '@docusaurus/Link';
 import CodeBlock from '@theme/CodeBlock';
+import useThemeContext from '@theme/hooks/useThemeContext';
 import Tabs from '@theme/Tabs';
 import Heading from '@theme/Heading';
 import TabItem from '@theme/TabItem';
-import IdealImage from '@theme/IdealImage';
 import Zoom from 'react-medium-image-zoom';
 
 import styles from './styles.module.scss';
@@ -16,7 +16,7 @@ import { getVersion } from '../../utils';
 const reference = REFERENCE_API;
 
 export default {
-  a: (props: HTMLProps<HTMLAnchorElement>) => {
+  a: (props: HTMLProps<HTMLAnchorElement>): JSX.Element => {
     if (props.href && props.href.startsWith('!')) {
       const name = props.href.replace('!', '');
       const entity = reference[name];
@@ -26,6 +26,7 @@ export default {
           <a
             {...props}
             target="_blank"
+            rel="noreferrer"
             href={`https://pub.dev/documentation/${entity.plugin}/${entity.version}/${entity.href}`}
           />
         );
@@ -40,70 +41,24 @@ export default {
     return <Link {...props} />;
   },
 
-  img: (props: HTMLProps<HTMLImageElement>) => {
-    // @ts-ignore
-    if (props['data-asset'] === 'false') {
-      // @ts-ignore
-      return <img {...props} />;
-    }
+  pre: (props: HTMLProps<HTMLDivElement>): JSX.Element => (
+    <div className={styles.mdxCodeBlock} {...props} />
+  ),
 
-    let alt = props.alt || '';
-
-    // Prefix any alt tags with "hide:" to not show them as a caption
-    if (alt.startsWith('hide:')) {
-      alt = alt.replace('hide:', '');
-    }
-
-    // Windows Workaround
-    if (!props.src) return null;
-    if (props.src.startsWith('http')) {
-      return (
-        <figure className={styles.figure}>
-          <Zoom>
-            {/* @ts-ignore */}
-            <img {...props} />
-          </Zoom>
-          {alt === props.alt && <figcaption>{alt}</figcaption>}
-        </figure>
-      );
-    }
-
-    let imgSrc;
-    try {
-      imgSrc = require(`../../../../docs/_assets/${props.src}`);
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-
-    if (!imgSrc) return null;
-
-    return (
-      <figure className={styles.figure}>
-        <Zoom>
-          <IdealImage img={imgSrc} alt={alt} quality={100} />
-        </Zoom>
-        {alt === props.alt && <figcaption>{alt}</figcaption>}
-      </figure>
-    );
-  },
-
-  pre: (props: HTMLProps<HTMLDivElement>) => <div className={styles.mdxCodeBlock} {...props} />,
-
-  inlineCode: (props: HTMLProps<HTMLElement>) => {
+  inlineCode: (props: HTMLProps<HTMLElement>): JSX.Element => {
     const { children } = props;
     if (typeof children === 'string') {
       return <code {...props}>{getVersion(children)}</code>;
     }
-    return children;
+    return children as JSX.Element;
   },
 
-  code: (props: HTMLProps<HTMLElement>) => {
+  code: (props: HTMLProps<HTMLElement>): JSX.Element => {
     const { children } = props;
     if (typeof children === 'string') {
       return <CodeBlock {...props}>{getVersion(children)}</CodeBlock>;
     }
-    return children;
+    return children as JSX.Element;
   },
 
   h1: Heading('h1'),
@@ -113,7 +68,7 @@ export default {
   h5: Heading('h5'),
   h6: Heading('h6'),
 
-  table: (props: HTMLProps<HTMLTableElement>) => (
+  table: (props: HTMLProps<HTMLTableElement>): JSX.Element => (
     <div style={{ overflowX: 'auto' }}>
       <table {...props} />
     </div>
@@ -122,12 +77,42 @@ export default {
   Tabs,
   TabItem,
 
-  blockquote: (props: HTMLProps<HTMLElement>) => (
+  blockquote: (props: HTMLProps<HTMLElement>): JSX.Element => (
     <blockquote className={styles.blockquote} {...props} />
   ),
 
+  DartPad: ({ path, branch }: { path: string; branch?: string }): JSX.Element => {
+    const { isDarkTheme } = useThemeContext();
+
+    return (
+      <div
+        style={{
+          marginBottom: '2rem',
+          position: 'relative',
+          paddingTop: '56.25%',
+        }}
+      >
+        <iframe
+          src={`https://dartpad.dev/embed-flutter.html?theme=${
+            isDarkTheme ? 'dark' : 'light'
+          }&run=true&split=70&null_safety=true&gh_owner=FirebaseExtended&gh_repo=flutterfire&gh_ref=${
+            branch || 'master'
+          }&gh_path=${path}`}
+          style={{
+            border: 0,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </div>
+    );
+  },
+
   //Enables global usage of <YouTube id="xxxx" /> within MDX files
-  YouTube: ({ id }: { id: string }) => {
+  YouTube: ({ id }: { id: string }): JSX.Element => {
     return (
       <div className={styles.youtube}>
         <iframe
@@ -137,6 +122,44 @@ export default {
           allowFullScreen
         />
       </div>
+    );
+  },
+
+  Image: ({
+    src,
+    alt,
+    caption = true,
+    zoom = true,
+    style,
+  }: {
+    src: string;
+    alt?: string;
+    zoom?: boolean;
+    caption?: boolean;
+    style?: React.CSSProperties;
+  }): JSX.Element => {
+    let image;
+    const isExternalImage = src.startsWith('http');
+
+    if (!isExternalImage) {
+      try {
+        image = require(`../../../../docs/_assets/${src}`).default;
+      } catch (e) {
+        console.error(e);
+        image = '';
+      }
+    } else {
+      image = src;
+    }
+
+    const withZoom = (children: React.ReactNode) => <Zoom>{children}</Zoom>;
+
+    return (
+      <figure className={styles.figure}>
+        {zoom && withZoom(<img src={image} alt={alt || 'No alt text.'} style={style} />)}
+        {!zoom && <img src={image} alt={alt || 'No alt text.'} style={style} />}
+        {!!alt && caption && <figcaption>{alt}</figcaption>}
+      </figure>
     );
   },
 };

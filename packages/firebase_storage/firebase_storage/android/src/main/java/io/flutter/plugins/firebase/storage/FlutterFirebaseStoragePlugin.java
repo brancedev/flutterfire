@@ -21,7 +21,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugins.firebase.core.FlutterFirebasePlugin;
 import io.flutter.plugins.firebase.core.FlutterFirebasePluginRegistry;
 import java.io.File;
@@ -34,11 +33,6 @@ import java.util.Objects;
 public class FlutterFirebaseStoragePlugin
     implements FlutterFirebasePlugin, MethodCallHandler, FlutterPlugin {
   private MethodChannel channel;
-
-  public static void registerWith(PluginRegistry.Registrar registrar) {
-    FlutterFirebaseStoragePlugin instance = new FlutterFirebaseStoragePlugin();
-    instance.initInstance(registrar.messenger());
-  }
 
   static Map<String, Object> parseMetadata(StorageMetadata storageMetadata) {
     if (storageMetadata == null) {
@@ -205,6 +199,18 @@ public class FlutterFirebaseStoragePlugin
     out.put("items", items);
     out.put("prefixes", prefixes);
     return out;
+  }
+
+  private Task<Void> useEmulator(Map<String, Object> arguments) {
+    return Tasks.call(
+        cachedThreadPool,
+        () -> {
+          FirebaseStorage firebaseStorage = getStorage(arguments);
+          String host = (String) arguments.get("host");
+          int port = (int) arguments.get("port");
+          firebaseStorage.useEmulator(host, port);
+          return null;
+        });
   }
 
   private Task<Void> referenceDelete(Map<String, Object> arguments) {
@@ -452,6 +458,9 @@ public class FlutterFirebaseStoragePlugin
     Task<?> methodCallTask;
 
     switch (call.method) {
+      case "Storage#useEmulator":
+        methodCallTask = useEmulator(call.arguments());
+        break;
       case "Reference#delete":
         methodCallTask = referenceDelete(call.arguments());
         break;

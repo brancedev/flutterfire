@@ -1,3 +1,216 @@
+## 3.2.10
+
+ - **FIX**: Allow raw data arguments to be passed as data to Cloud Function for `Android` & `iOS`. (#7994). ([8288b811](https://github.com/FirebaseExtended/flutterfire/commit/8288b811f2b82df263a092428905960960e537c6))
+
+## 3.2.9
+
+ - **FIX**: update all Dart SDK version constraints to Dart >= 2.16.0 (#8184). ([df4a5bab](https://github.com/FirebaseExtended/flutterfire/commit/df4a5bab3c029399b4f257a5dd658d302efe3908))
+
+## 3.2.8
+
+ - Update a dependency to the latest release.
+
+## 3.2.7
+
+- **REFACTOR**: remove deprecated Android API usages (#7986). ([232e5f89](https://github.com/FirebaseExtended/flutterfire/commit/232e5f8972df8ef22bfb76ce8cf1e631d823a1b5))
+
+## 3.2.6
+
+ - Update a dependency to the latest release.
+
+## 3.2.5
+
+ - **FIX**: bump Android `compileSdkVersion` to 31 (#7726). ([a9562bac](https://github.com/FirebaseExtended/flutterfire/commit/a9562bac60ba927fb3664a47a7f7eaceb277dca6))
+
+## 3.2.4
+
+ - **REFACTOR**: fix all `unnecessary_import` analyzer issues introduced with Flutter 2.8. ([7f0e82c9](https://github.com/FirebaseExtended/flutterfire/commit/7f0e82c978a3f5a707dd95c7e9136a3e106ff75e))
+
+## 3.2.3
+
+ - Update a dependency to the latest release.
+
+## 3.2.2
+
+ - Update a dependency to the latest release.
+
+## 3.2.1
+
+ - Update a dependency to the latest release.
+
+## 3.2.0
+
+ - **REFACTOR**: migrate remaining examples & e2e tests to null-safety (#7393).
+ - **FEAT**: automatically inject Firebase JS SDKs (#7359).
+
+## 3.1.1
+
+ - Update a dependency to the latest release.
+
+## 3.1.0
+
+ - **FEAT**: support initializing default `FirebaseApp` instances from Dart (#6549).
+
+## 3.0.6
+
+ - Update a dependency to the latest release.
+
+## 3.0.5
+
+ - **REFACTOR**: remove deprecated Flutter Android v1 Embedding usages, including in example app (#7158).
+
+## 3.0.4
+
+ - Update a dependency to the latest release.
+
+## 3.0.3
+
+ - **FIX**: android V2 embedding (#6982).
+
+## 3.0.2
+
+ - Update a dependency to the latest release.
+
+## 3.0.1
+
+ - Update a dependency to the latest release.
+
+## 3.0.0
+
+> Note: This release has breaking changes.
+
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+ - **BREAKING** **FEAT**: use<product>Emulator(host, port) API update.
+ - **BREAKING** **FEAT**: use<product>Emulator(host, port) API update (#6439).
+
+## 2.0.0
+
+> Note: This release has breaking changes.
+
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+ - **BREAKING** **FEAT**: useFunctionsEmulator(host, port) API update.
+
+## 1.1.2
+
+ - Update a dependency to the latest release.
+
+## 1.1.1
+
+ - **DOCS**: Add Flutter Favorite badge (#6190).
+
+## 1.1.0
+
+ - **FEAT**: upgrade Firebase JS SDK version to 8.6.1.
+ - **FIX**: podspec osx version checking script should use a version range instead of a single fixed version.
+
+## 1.0.7
+
+ - Update a dependency to the latest release.
+
+## 1.0.6
+
+ - **FIX**: possible null pointer exception when comparing error codes (#6008).
+
+## 1.0.5
+
+ - Update a dependency to the latest release.
+
+## 1.0.4
+
+ - **FIX**: return correct type on native (#5709).
+ - **CHORE**: update Web plugins to use Firebase JS SDK version 8.4.1 (#4464).
+ - **CHORE**: update drive dependency (#5740).
+
+## 1.0.3
+
+ - Update a dependency to the latest release.
+
+## 1.0.2
+
+ - **FIX**: use `kIsWeb` to check platform is Web (#5369).
+ - **CHORE**: bump min Dart SDK constraint to 2.12.0 (#5430).
+ - **CHORE**: publish packages (#5429).
+ - **CHORE**: merge all analysis_options.yaml into one (#5329).
+ - **CHORE**: publish packages.
+
+## 1.0.1
+
+ - **FIX**: use `kIsWeb` to check platform is Web (#5369).
+
+## 1.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 1.0.0-1.0.nullsafety.1
+
+ - Update platform interface and web dependencies.
+
+## 1.0.0-1.0.nullsafety.0
+
+ - Bump "cloud_functions" to `1.0.0-1.0.nullsafety.0`.
+
+## 0.9.1-1.0.nullsafety.2
+
+ - Update a dependency to the latest release.
+
+## 0.9.1-1.0.nullsafety.1
+
+ - **REFACTOR**: pubspec & dependency updates (#4932).
+
+## 0.9.1-1.0.nullsafety.0
+
+ - **FIX**: bump firebase_core_* package versions to updated NNBD versioning format (#4832).
+
+## 0.9.1-nullsafety.1
+
+ - **FIX**: bump `firebase_core` dependencies to resolve versioning issue when releasing.
+
+## 0.9.1-nullsafety.0
+
+- **REFACTOR**: migrate to NNBD.
+
+## 0.9.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add check on podspec to assist upgrading users deployment target.
+ - **BUILD**: commit Podfiles with 10.12 deployment target.
+ - **BUILD**: remove default sdk version, version should always come from firebase_core, or be user defined.
+ - **BUILD**: set macOS deployment target to 10.12 (from 10.11).
+ - **BREAKING** **BUILD**: set osx min supported platform version to 10.12.
+
+## 0.8.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **REFACTOR**: remove all currently deprecated APIs.
+ - **BREAKING** **FEAT**: forward port to firebase-ios-sdk v7.3.0.
+   - Due to this SDK upgrade, iOS 10 is now the minimum supported version by FlutterFire. Please update your build target version.
+ - **CHORE**: harmonize dependencies and version handling.
+
+## 0.7.2
+
+ - **FEAT**: bump android `com.android.tools.build` & `'com.google.gms:google-services` versions (#4269).
+
+## 0.7.1
+
+ - **TEST**: Explicitly opt-out from null safety.
+ - **FEAT**: migrate interop files (#4191).
+ - **CHORE**: bump gradle wrapper to 5.6.4 (#4158).
+
+## 0.7.0+1
+
+ - Update a dependency to the latest release.
+
+## 0.7.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 0.7.0-dev.3
+
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: update Firebase iOS SDK version to 6.33.0 (from 6.26.0).
+
 ## 0.7.0-dev.2
 
  - **DOCS**: update package readme.
@@ -26,7 +239,7 @@ Along with the below changes, the plugin has been reworked to bring it inline wi
    - **FIX**: `HttpsCallableResult`'s `data` property can now return a Map, List or a primitive value. Previously the Web implementation incorrectly assumed that a Map was always returned by the HTTPS callable function.
 
 
- - **`HttpsCallableOptions`**: 
+ - **`HttpsCallableOptions`**:
    - **NEW**: This new class has been created to support setting options for `httpsCallable` instances.
 
 ## 0.6.0+1

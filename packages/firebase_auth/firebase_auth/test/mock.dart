@@ -6,9 +6,9 @@ import 'package:firebase_core_platform_interface/firebase_core_platform_interfac
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-typedef Callback(MethodCall call);
+typedef Callback = void Function(MethodCall call);
 
-setupFirebaseAuthMocks([Callback customHandlers]) {
+void setupFirebaseAuthMocks([Callback? customHandlers]) {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {
@@ -41,4 +41,11 @@ setupFirebaseAuthMocks([Callback customHandlers]) {
 
     return null;
   });
+}
+
+Future<T> neverEndingFuture<T>() async {
+  // ignore: literal_only_boolean_expressions
+  while (true) {
+    await Future.delayed(const Duration(minutes: 5));
+  }
 }

@@ -4,6 +4,7 @@
 
 package io.flutter.plugins.firebase.functions;
 
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.Task;
@@ -13,11 +14,11 @@ import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableReference;
 import com.google.firebase.functions.HttpsCallableResult;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.plugins.firebase.core.FlutterFirebasePlugin;
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -26,13 +27,29 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class FlutterFirebaseFunctionsPlugin implements FlutterFirebasePlugin, MethodCallHandler {
+public class FlutterFirebaseFunctionsPlugin
+    implements FlutterPlugin, FlutterFirebasePlugin, MethodCallHandler {
 
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel =
-        new MethodChannel(registrar.messenger(), "plugins.flutter.io/firebase_functions");
-    channel.setMethodCallHandler(
-        new io.flutter.plugins.firebase.functions.FlutterFirebaseFunctionsPlugin());
+  private static final String METHOD_CHANNEL_NAME = "plugins.flutter.io/firebase_functions";
+  private MethodChannel channel;
+
+  /**
+   * Default Constructor.
+   *
+   * <p>Use this when adding the plugin to your FlutterEngine
+   */
+  public FlutterFirebaseFunctionsPlugin() {}
+
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+    channel = new MethodChannel(binding.getBinaryMessenger(), METHOD_CHANNEL_NAME);
+    channel.setMethodCallHandler(this);
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    channel.setMethodCallHandler(null);
+    channel = null;
   }
 
   private FirebaseFunctions getFunctions(Map<String, Object> arguments) {
@@ -54,11 +71,8 @@ public class FlutterFirebaseFunctionsPlugin implements FlutterFirebasePlugin, Me
           Object parameters = arguments.get("parameters");
 
           if (origin != null) {
-            // TODO(helenaford): Placeholder logic for useEmulator when available
-            // Uri originUri = Uri.parse(origin);
-            // firebaseFunctions.useEmulator(originUri.getHost(), originUri.getPort());
-
-            firebaseFunctions.useFunctionsEmulator(origin);
+            Uri originUri = Uri.parse(origin);
+            firebaseFunctions.useEmulator(originUri.getHost(), originUri.getPort());
           }
 
           HttpsCallableReference httpsCallableReference =
@@ -114,13 +128,13 @@ public class FlutterFirebaseFunctionsPlugin implements FlutterFirebasePlugin, Me
       additionalData = functionsException.getDetails();
 
       if (functionsException.getCause() instanceof IOException
-          && functionsException.getCause().getMessage().equals("Canceled")) {
+          && "Canceled".equals(functionsException.getCause().getMessage())) {
         // return DEADLINE_EXCEEDED for IOException cancel errors, to match iOS & Web
         code = FirebaseFunctionsException.Code.DEADLINE_EXCEEDED.name();
         message = FirebaseFunctionsException.Code.DEADLINE_EXCEEDED.name();
       } else if (functionsException.getCause() instanceof InterruptedIOException
           // return DEADLINE_EXCEEDED for InterruptedIOException errors, to match iOS & Web
-          && functionsException.getCause().getMessage().equals("timeout")) {
+          && "timeout".equals(functionsException.getCause().getMessage())) {
         code = FirebaseFunctionsException.Code.DEADLINE_EXCEEDED.name();
         message = FirebaseFunctionsException.Code.DEADLINE_EXCEEDED.name();
       } else if (functionsException.getCause() instanceof IOException) {

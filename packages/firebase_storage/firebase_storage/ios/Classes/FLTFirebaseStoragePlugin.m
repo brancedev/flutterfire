@@ -1,6 +1,7 @@
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+#import <TargetConditionals.h>
 
 #import <Firebase/Firebase.h>
 #import <firebase_core/FLTFirebasePluginRegistry.h>
@@ -152,7 +153,9 @@ typedef NS_ENUM(NSUInteger, FLTFirebaseStorageStringType) {
   FLTFirebaseMethodCallResult *methodCallResult =
       [FLTFirebaseMethodCallResult createWithSuccess:flutterResult andErrorBlock:errorBlock];
 
-  if ([@"Reference#delete" isEqualToString:call.method]) {
+  if ([@"Storage#useEmulator" isEqualToString:call.method]) {
+    [self useEmulator:call.arguments withMethodCallResult:methodCallResult];
+  } else if ([@"Reference#delete" isEqualToString:call.method]) {
     [self referenceDelete:call.arguments withMethodCallResult:methodCallResult];
   } else if ([@"Reference#getDownloadURL" isEqualToString:call.method]) {
     [self referenceGetDownloadUrl:call.arguments withMethodCallResult:methodCallResult];
@@ -187,6 +190,11 @@ typedef NS_ENUM(NSUInteger, FLTFirebaseStorageStringType) {
 
 #pragma mark - Firebase Storage API
 
+- (void)useEmulator:(id)arguments withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
+  [self FIRStorageForArguments:arguments];
+  result.success(nil);
+}
+
 - (void)referenceDelete:(id)arguments withMethodCallResult:(FLTFirebaseMethodCallResult *)result {
   FIRStorageReference *reference = [self FIRStorageReferenceForArguments:arguments];
   [reference deleteWithCompletion:^(NSError *error) {
@@ -205,8 +213,15 @@ typedef NS_ENUM(NSUInteger, FLTFirebaseStorageStringType) {
     if (error != nil) {
       result.error(nil, nil, nil, error);
     } else {
+      NSString *url = URL.absoluteString;
+
+      if ([url rangeOfString:@":443"].location != NSNotFound) {
+        NSRange replaceRange = [url rangeOfString:@":443"];
+        url = [url stringByReplacingCharactersInRange:replaceRange withString:@""];
+      }
+
       result.success(@{
-        @"downloadURL" : URL.absoluteString,
+        @"downloadURL" : url,
       });
     }
   }];
@@ -817,7 +832,7 @@ typedef NS_ENUM(NSUInteger, FLTFirebaseStorageStringType) {
   NSString *bucket = arguments[kFLTFirebaseStorageKeyBucket];
   FIRApp *firebaseApp = [FLTFirebasePlugin firebaseAppNamed:appName];
 
-  if (![bucket isEqual:[NSNull null]]) {
+  if (![bucket isEqual:[NSNull null]] && bucket != nil) {
     NSString *url = [@"gs://" stringByAppendingString:bucket];
     storage = [FIRStorage storageForApp:firebaseApp URL:url];
   } else {
@@ -837,6 +852,17 @@ typedef NS_ENUM(NSUInteger, FLTFirebaseStorageStringType) {
   NSNumber *maxUploadRetryTime = arguments[kFLTFirebaseStorageKeyMaxUploadRetryTime];
   if (![maxUploadRetryTime isEqual:[NSNull null]]) {
     storage.maxUploadRetryTime = [maxUploadRetryTime longLongValue] / 1000.0;
+  }
+
+  NSString *emulatorHost = arguments[@"host"];
+  if (![emulatorHost isEqual:[NSNull null]] && emulatorHost != nil) {
+    @try {
+      [storage useEmulatorWithHost:emulatorHost port:[arguments[@"port"] integerValue]];
+    } @catch (NSException *e) {
+      NSLog(@"WARNING: Unable to set the Firebase Storage emulator settings. These must be set "
+            @"before any usages of Firebase Storage. If you see this log after a hot "
+            @"reload/restart you can safely ignore it.");
+    }
   }
 
   storage.callbackQueue = _callbackQueue;

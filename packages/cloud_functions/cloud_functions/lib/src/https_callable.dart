@@ -1,3 +1,4 @@
+// ignore_for_file: require_trailing_commas
 // Copyright 2020, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -8,9 +9,12 @@ part of cloud_functions;
 ///
 /// You can get an instance by calling [FirebaseFunctions.instance.httpsCallable].
 class HttpsCallable {
-  HttpsCallable._(this._delegate);
+  HttpsCallable._(this.delegate);
 
-  final HttpsCallablePlatform _delegate;
+  /// Returns the underlying [HttpsCallablePlatform] delegate for this
+  /// [HttpsCallable] instance. This is useful for testing purposes only.
+  @visibleForTesting
+  final HttpsCallablePlatform delegate;
 
   /// Executes this Callable HTTPS trigger asynchronously.
   ///
@@ -27,33 +31,64 @@ class HttpsCallable {
   /// instance. If a user is logged in with Firebase Auth, an auth ID token for
   /// the user is also automatically included.
   Future<HttpsCallableResult<T>> call<T>([dynamic parameters]) async {
-    _assertValidParameterType(parameters);
-    assert(_delegate != null);
-    return HttpsCallableResult<T>._(await _delegate.call(parameters));
-  }
+    assert(_debugIsValidParameterType(parameters));
 
-  @Deprecated(
-      "Setting the timeout is deprecated in favor of using [HttpsCallableOptions]")
-  // ignore: public_member_api_docs
-  set timeout(Duration duration) {
-    _delegate.timeout = duration;
+    Object? updatedParameters;
+    if (parameters is Map) {
+      Map update = {};
+      parameters.forEach((key, value) {
+        update[key] = _updateRawDataToList(value);
+      });
+      updatedParameters = update;
+    } else if (parameters is List) {
+      List update = parameters.map(_updateRawDataToList).toList();
+      updatedParameters = update;
+    } else {
+      updatedParameters = _updateRawDataToList(parameters);
+    }
+    return HttpsCallableResult<T>._(await delegate.call(updatedParameters));
   }
 }
 
-/// Asserts whether a given call parameter is a valid type.
-void _assertValidParameterType(dynamic parameter, [bool isRoot = true]) {
+dynamic _updateRawDataToList(dynamic value) {
+  if (value is Uint8List ||
+      value is Int32List ||
+      value is Int64List ||
+      value is Float32List ||
+      value is Float64List) {
+    return value.toList();
+  } else {
+    return value;
+  }
+}
+
+/// Whether a given call parameter is a valid type.
+bool _debugIsValidParameterType(dynamic parameter, [bool isRoot = true]) {
   if (parameter is List) {
-    return parameter
-        .forEach((element) => _assertValidParameterType(element, false));
+    for (final element in parameter) {
+      if (!_debugIsValidParameterType(element, false)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   if (parameter is Map) {
-    return parameter
-        .forEach((_, value) => _assertValidParameterType(value, false));
+    for (final key in parameter.keys) {
+      if (key is! String) {
+        return false;
+      }
+    }
+    for (final value in parameter.values) {
+      if (!_debugIsValidParameterType(value, false)) {
+        return false;
+      }
+    }
+    return true;
   }
 
-  assert(parameter == null ||
+  return parameter == null ||
       parameter is String ||
       parameter is num ||
-      parameter is bool);
+      parameter is bool;
 }

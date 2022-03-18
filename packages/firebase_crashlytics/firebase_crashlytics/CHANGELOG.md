@@ -1,3 +1,199 @@
+## 2.5.3
+
+ - **FIX**: update all Dart SDK version constraints to Dart >= 2.16.0 (#8184). ([df4a5bab](https://github.com/FirebaseExtended/flutterfire/commit/df4a5bab3c029399b4f257a5dd658d302efe3908))
+
+## 2.5.2
+
+ - Update a dependency to the latest release.
+
+## 2.5.1
+
+ - Fixed macOS project not compiling by symlinking missing header file: `Crashlytics_Platform.h`
+
+## 2.5.0
+
+ - **FEAT**: Set the dSYM file format through the Crashlytic's podspec to allow symbolicating crash reports. (#7872). ([d5d7e26a](https://github.com/FirebaseExtended/flutterfire/commit/d5d7e26a4828963f375b656c6e1a397d26aac980))
+
+## 2.4.5
+
+ - **FIX**: bump Android `compileSdkVersion` to 31 (#7726). ([a9562bac](https://github.com/FirebaseExtended/flutterfire/commit/a9562bac60ba927fb3664a47a7f7eaceb277dca6))
+
+## 2.4.4
+
+ - **REFACTOR**: fix all `unnecessary_import` analyzer issues introduced with Flutter 2.8. ([7f0e82c9](https://github.com/FirebaseExtended/flutterfire/commit/7f0e82c978a3f5a707dd95c7e9136a3e106ff75e))
+ - **FIX**: set build id as not required, to allow Dart default app initialization (#7594). ([c15fdda3](https://github.com/FirebaseExtended/flutterfire/commit/c15fdda33b447ddd0c8e066e9c9ec7cabf9cd6fd))
+ - **FIX**: Return app constants for default app only on `Android`. (#7592). ([b803c425](https://github.com/FirebaseExtended/flutterfire/commit/b803c425b420acae155fea93a62ab9b3de4556a5))
+
+## 2.4.3
+
+ - Update a dependency to the latest release.
+
+## 2.4.2
+
+ - Update a dependency to the latest release.
+
+## 2.4.1
+
+ - Update a dependency to the latest release.
+
+## 2.4.0
+
+ - **REFACTOR**: migrate remaining examples & e2e tests to null-safety (#7393).
+ - **FEAT**: log development platform to Crashlytics in Crashlytics iOS plugin (#7322).
+
+## 2.3.0
+
+ - **FEAT**: support initializing default `FirebaseApp` instances from Dart (#6549).
+
+## 2.2.5
+
+ - Update a dependency to the latest release.
+
+## 2.2.4
+
+ - **REFACTOR**: remove deprecated Flutter Android v1 Embedding usages, including in example app (#7158).
+
+## 2.2.3
+
+ - **FIX**: switch usage of `dumpErrorToConsole` to `presentError` to remove duplicate logging (#7046).
+ - **CHORE**: remove unused deprecated V1 embedding for android (#7127).
+
+## 2.2.2
+
+ - Update a dependency to the latest release.
+
+## 2.2.1
+
+ - Update a dependency to the latest release.
+
+## 2.2.0
+
+ - **STYLE**: enable additional lint rules (#6832).
+ - **FEAT**: lower iOS & macOS deployment targets for relevant plugins (#6757).
+
+## 2.1.1
+
+ - **FIX**: issue where build would fail with missing header (#6628).
+
+## 2.1.0
+
+ - **FIX**: improve stack trace symbol. "class.method" signature. (#6442).
+ - **FEAT**: submit analytics crash event on fatal - enables support for crash free users reporting (#5900).
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+
+## 2.0.7
+
+ - **FIX**: improve stack trace symbol. "class.method" signature. (#6442).
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+
+## 2.0.6
+
+ - Update a dependency to the latest release.
+
+## 2.0.5
+
+ - **DOCS**: Add Flutter Favorite badge (#6190).
+
+## 2.0.4
+
+ - **FIX**: podspec osx version checking script should use a version range instead of a single fixed version.
+
+## 2.0.3
+
+ - Update a dependency to the latest release.
+
+## 2.0.2
+
+ - Update a dependency to the latest release.
+
+## 2.0.1
+
+ - **FIX**: Avoid duplicate prints (#5718).
+ - **FIX**: Include obfuscated stack traces (#4407).
+ - **CHORE**: update drive dependency (#5740).
+
+## 2.0.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: Add Flutter dependency to podspec (#5455).
+ - **FEAT**: fatal error crash report (#5427).
+ - **CHORE**: add repository urls to pubspecs (#5542).
+ - **CHORE**: bump min Dart SDK constraint to 2.12.0 (#5430).
+ - **CHORE**: merge all analysis_options.yaml into one (#5329).
+ - **CHORE**: publish packages.
+ - **BREAKING** **FIX**: `checkForUnsentReports` should error if `isCrashlyticsCollectionEnabled` is false (#5187).
+
+## 1.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 1.0.0-1.0.nullsafety.0
+
+ - Bump "firebase_crashlytics" to `1.0.0-1.0.nullsafety.0`.
+
+## 0.5.0-1.0.nullsafety.3
+
+ - Update a dependency to the latest release.
+
+## 0.5.0-1.0.nullsafety.2
+
+ - **REFACTOR**: pubspec & dependency updates (#4932).
+ - **REFACTOR**: replace deprecated `RaisedButton` widget with `ElevatedButton`.
+
+## 0.5.0-1.0.nullsafety.1
+
+ - **FIX**: bump firebase_core_* package versions to updated NNBD versioning format (#4832).
+
+## 0.5.0-1.0.nullsafety.0
+
+- **REFACTOR**: migrate to NNBD.
+
+## 0.4.0+1
+
+ - **REFACTOR**: updated crashlytics e2e test library.
+ - **FIX**: updated didCrashOnPreviousExecution call.
+
+## 0.4.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add check on podspec to assist upgrading users deployment target.
+ - **BUILD**: commit Podfiles with 10.12 deployment target.
+ - **BUILD**: remove default sdk version, version should always come from firebase_core, or be user defined.
+ - **BUILD**: set macOS deployment target to 10.12 (from 10.11).
+ - **BREAKING** **BUILD**: set osx min supported platform version to 10.12.
+
+## 0.3.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: bubble exceptions (#4419).
+ - **BREAKING** **REFACTOR**: remove all currently deprecated APIs.
+ - **BREAKING** **FEAT**: forward port to firebase-ios-sdk v7.3.0.
+   - Due to this SDK upgrade, iOS 10 is now the minimum supported version by FlutterFire. Please update your build target version.
+ - **CHORE**: harmonize dependencies and version handling.
+
+## 0.2.4
+
+ - **FEAT**: bump android `com.android.tools.build` & `'com.google.gms:google-services` versions (#4269).
+
+## 0.2.3+1
+
+ - Update a dependency to the latest release.
+
+## 0.2.3
+
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: bump `compileSdkVersion` to 29 in preparation for upcoming Play Store requirement.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
+## 0.2.2
+
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: update Firebase iOS SDK version to 6.33.0 (from 6.26.0).
+
 ## 0.2.1+1
 
  - **FIX**: Change minimum version of stack_trace package (#3639).

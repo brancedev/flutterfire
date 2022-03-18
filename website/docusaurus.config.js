@@ -9,13 +9,6 @@ module.exports = {
   organizationName: 'FirebaseExtended',
   projectName: 'flutterfire',
   themeConfig: {
-    announcementBar: {
-      id: 'wip',
-      content:
-        'The FlutterFire documentation hub is currently a work in progress. <a rel="noopener" target="_blank" href="https://github.com/FirebaseExtended/flutterfire/issues/2582"><b>Check out the roadmap to learn more.</b></a>.',
-      backgroundColor: '#13B9FD',
-      textColor: '#fff',
-    },
     algolia: {
       apiKey: '61eba190d4380f3db4e11d21b70e7608',
       indexName: 'flutterfire',
@@ -40,11 +33,10 @@ module.exports = {
         alt: 'FlutterFire Logo',
         src: '/img/flutterfire_300x.png',
       },
-      links: [
+      items: [
         {
-          to: 'docs/overview',
-          activeBasePath: 'docs',
-          label: 'Docs',
+          href: 'https://dartpad.dev/?id=d57c6c898dabb8c6fb41018588b8cf73',
+          label: 'DartPad',
           position: 'right',
         },
         {
@@ -70,16 +62,12 @@ module.exports = {
               to: '/docs/overview',
             },
             {
-              label: 'Android Installation',
-              to: 'docs/installation/android',
+              label: 'FlutterFire CLI',
+              to: 'docs/cli',
             },
             {
-              label: 'iOS Installation',
-              to: 'docs/installation/ios',
-            },
-            {
-              label: 'Web Installation',
-              to: 'docs/installation/web',
+              label: 'Manual Installation',
+              to: 'docs/manual-installation',
             },
           ],
         },
@@ -123,11 +111,10 @@ module.exports = {
   },
   plugins: [
     require.resolve('docusaurus-plugin-sass'),
-    require.resolve('@docusaurus/plugin-ideal-image'),
-    require.resolve('@docusaurus/plugin-google-gtag'),
     path.resolve(__dirname, './docusaurus-plugins/favicon-tags'),
     path.resolve(__dirname, './docusaurus-plugins/source-versions'),
     path.resolve(__dirname, './docusaurus-plugins/source-api-reference'),
+    path.resolve(__dirname, './docusaurus-plugins/source-ui-widgets'),
   ],
   presets: [
     [

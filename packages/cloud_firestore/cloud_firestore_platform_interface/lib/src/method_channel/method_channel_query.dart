@@ -1,3 +1,4 @@
+// ignore_for_file: require_trailing_commas
 // Copyright 2017, the Chromium project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -6,6 +7,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 import 'package:cloud_firestore_platform_interface/src/internal/pointer.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import 'method_channel_firestore.dart';
 import 'method_channel_query_snapshot.dart';
@@ -15,20 +19,20 @@ import 'utils/exception.dart';
 /// An implementation of [QueryPlatform] that uses [MethodChannel] to
 /// communicate with Firebase plugins.
 class MethodChannelQuery extends QueryPlatform {
-  /// Flags whether the current query is for a collection group.
-  final bool isCollectionGroupQuery;
-
   /// Create a [MethodChannelQuery] from a [path] and optional [parameters]
   MethodChannelQuery(
     FirebaseFirestorePlatform _firestore,
     String path, {
-    Map<String, dynamic> parameters,
+    Map<String, dynamic>? parameters,
     this.isCollectionGroupQuery = false,
-  }) : super(_firestore, parameters) {
-    _pointer = Pointer(path);
-  }
+  })  : _pointer = Pointer(path),
+        super(_firestore, parameters);
 
-  Pointer _pointer;
+  /// Flags whether the current query is for a collection group.
+  @override
+  final bool isCollectionGroupQuery;
+
+  final Pointer _pointer;
 
   /// Returns the Document path that that this query relates to.
   String get path {
@@ -87,9 +91,10 @@ class MethodChannelQuery extends QueryPlatform {
 
   /// Fetch the documents for this query
   @override
-  Future<QuerySnapshotPlatform> get([GetOptions options]) async {
+  Future<QuerySnapshotPlatform> get(
+      [GetOptions options = const GetOptions()]) async {
     try {
-      final Map<String, dynamic> data = await MethodChannelFirebaseFirestore
+      final Map<String, dynamic>? data = await MethodChannelFirebaseFirestore
           .channel
           .invokeMapMethod<String, dynamic>(
         'Query#get',
@@ -100,9 +105,9 @@ class MethodChannelQuery extends QueryPlatform {
         },
       );
 
-      return MethodChannelQuerySnapshot(firestore, data);
-    } catch (e) {
-      throw convertPlatformException(e);
+      return MethodChannelQuerySnapshot(firestore, data!);
+    } catch (e, stack) {
+      convertPlatformException(e, stack);
     }
   }
 
@@ -126,39 +131,39 @@ class MethodChannelQuery extends QueryPlatform {
   Stream<QuerySnapshotPlatform> snapshots({
     bool includeMetadataChanges = false,
   }) {
-    assert(includeMetadataChanges != null);
-    int handle = MethodChannelFirebaseFirestore.nextMethodChannelHandleId;
-    Completer<void> onListenComplete = Completer<void>();
-
     // It's fine to let the StreamController be garbage collected once all the
     // subscribers have cancelled; this analyzer warning is safe to ignore.
-    StreamController<QuerySnapshotPlatform> controller; // ignore: close_sinks
+    late StreamController<QuerySnapshotPlatform>
+        controller; // ignore: close_sinks
+
+    StreamSubscription<dynamic>? snapshotStream;
     controller = StreamController<QuerySnapshotPlatform>.broadcast(
       onListen: () async {
-        MethodChannelFirebaseFirestore.queryObservers[handle] = controller;
-        await MethodChannelFirebaseFirestore.channel.invokeMethod<void>(
-          'Query#addSnapshotListener',
-          <String, dynamic>{
-            'query': this,
-            'handle': handle,
-            'firestore': firestore,
-            'includeMetadataChanges': includeMetadataChanges,
-          },
-        );
+        final observerId = await MethodChannelFirebaseFirestore.channel
+            .invokeMethod<String>('Query#snapshots');
 
-        if (!onListenComplete.isCompleted) {
-          onListenComplete.complete();
-        }
+        snapshotStream =
+            MethodChannelFirebaseFirestore.querySnapshotChannel(observerId!)
+                .receiveBroadcastStream(
+                  <String, dynamic>{
+                    'query': this,
+                    'includeMetadataChanges': includeMetadataChanges,
+                  },
+                )
+                .handleError(convertPlatformException)
+                .listen(
+                  (snapshot) {
+                    controller
+                        .add(MethodChannelQuerySnapshot(firestore, snapshot));
+                  },
+                  onError: controller.addError,
+                );
       },
-      onCancel: () async {
-        await onListenComplete.future;
-        await MethodChannelFirebaseFirestore.channel.invokeMethod<void>(
-          'Firestore#removeListener',
-          <String, dynamic>{'handle': handle},
-        );
-        MethodChannelFirebaseFirestore.queryObservers.remove(handle);
+      onCancel: () {
+        snapshotStream?.cancel();
       },
     );
+
     return controller.stream;
   }
 
@@ -207,4 +212,23 @@ class MethodChannelQuery extends QueryPlatform {
       'where': conditions,
     });
   }
+
+  @override
+  bool operator ==(Object other) {
+    return runtimeType == other.runtimeType &&
+        other is MethodChannelQuery &&
+        other.firestore == firestore &&
+        other._pointer == _pointer &&
+        other.isCollectionGroupQuery == isCollectionGroupQuery &&
+        const DeepCollectionEquality().equals(other.parameters, parameters);
+  }
+
+  @override
+  int get hashCode => hashValues(
+        runtimeType,
+        firestore,
+        _pointer,
+        isCollectionGroupQuery,
+        const DeepCollectionEquality().hash(parameters),
+      );
 }

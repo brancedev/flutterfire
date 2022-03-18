@@ -1,3 +1,156 @@
+## 5.5.1
+
+ - **FIX**: update all Dart SDK version constraints to Dart >= 2.16.0 (#8184). ([df4a5bab](https://github.com/FirebaseExtended/flutterfire/commit/df4a5bab3c029399b4f257a5dd658d302efe3908))
+
+## 5.5.0
+
+ - **FEAT**: refactor error handling to preserve stack traces on platform exceptions (#8156). ([6ac77d99](https://github.com/FirebaseExtended/flutterfire/commit/6ac77d99042de2a1950f89b35972e3ee1116dc9f))
+
+## 5.4.13
+
+ - **FIX**: Export enum `LoadBundleTaskState` from Platform Interface package. (#8027). ([7fa461e4](https://github.com/FirebaseExtended/flutterfire/commit/7fa461e4476db3ac255877db93b6ccf493d0e1cf))
+
+## 5.4.12
+
+ - Update a dependency to the latest release.
+
+## 5.4.11
+
+ - Update a dependency to the latest release.
+
+## 5.4.10
+
+ - **REFACTOR**: fix all `unnecessary_import` analyzer issues introduced with Flutter 2.8. ([7f0e82c9](https://github.com/FirebaseExtended/flutterfire/commit/7f0e82c978a3f5a707dd95c7e9136a3e106ff75e))
+
+## 5.4.9
+
+ - Update a dependency to the latest release.
+
+## 5.4.8
+
+ - Update a dependency to the latest release.
+
+## 5.4.7
+
+ - Update a dependency to the latest release.
+
+## 5.4.6
+
+ - Update a dependency to the latest release.
+
+## 5.4.5
+
+ - Update a dependency to the latest release.
+
+## 5.4.4
+
+ - Update a dependency to the latest release.
+
+## 5.4.3
+
+ - Update a dependency to the latest release.
+
+## 5.4.2
+
+ - Update a dependency to the latest release.
+
+## 5.4.1
+
+ - Update a dependency to the latest release.
+
+## 5.4.0
+
+ - **STYLE**: enable additional lint rules (#6832).
+ - **FEAT**: override ==/hashCode for Firestore Queries (#6797).
+
+## 5.3.0
+
+ - **FEAT**: useFirestoreEmulator(host, port) API for firestore (#6428).
+
+## 5.2.0
+
+ - **FEAT**: useFirestoreEmulator(host, port) API for firestore (#6428).
+
+## 5.1.2
+
+ - Update a dependency to the latest release.
+
+## 5.1.1
+
+ - Update a dependency to the latest release.
+
+## 5.1.0
+
+ - **FEAT**: loadBundle() & namedQueryGet() implementation (#6037).
+
+## 5.0.1
+
+ - **DOCS**: Add missing homepage/repository links (#6054).
+ - **CHORE**: publish packages (#6022).
+ - **CHORE**: publish packages.
+
+## 5.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: convert FieldPath parameters from dynamic to Object (#5997).
+
+## 4.0.3
+
+ - Update a dependency to the latest release.
+
+## 4.0.2
+
+ - Update a dependency to the latest release.
+
+## 4.0.1
+
+ - Update a dependency to the latest release.
+
+## 4.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 4.0.0-1.0.nullsafety.2
+
+ - **FIX**: Fix type issue. (#5081).
+ - **FIX**: Fixed crashes due to null `Settings` (#5031).
+
+## 4.0.0-1.0.nullsafety.1
+
+ - **TESTS**: update mockito API usage in tests
+
+## 4.0.0-1.0.nullsafety.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **REFACTOR**: migrate to NNBD (#4780).
+
+## 3.0.1
+
+ - Update a dependency to the latest release.
+
+## 3.0.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: Move Snapshot handling into a EventChannel (#4209).
+ - **BREAKING** **REFACTOR**: remove all currently deprecated APIs (#4594).
+
+## 2.2.1
+
+ - Update a dependency to the latest release.
+
+## 2.2.0
+
+ - **FEAT**: migrate firebase interop files to local repository (#3973).
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
+## 2.1.3
+
+ - Update a dependency to the latest release.
+
 ## 2.1.2
 
  - **FIX**: bubble exceptions (#3701).

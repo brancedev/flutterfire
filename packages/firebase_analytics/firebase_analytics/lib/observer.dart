@@ -1,28 +1,32 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2021 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
-import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 import 'package:flutter/widgets.dart';
-
-import 'firebase_analytics.dart';
+import 'package:flutter/services.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// Signature for a function that extracts a screen name from [RouteSettings].
 ///
 /// Usually, the route name is not a plain string, and it may contains some
 /// unique ids that makes it difficult to aggregate over them in Firebase
 /// Analytics.
-typedef String ScreenNameExtractor(RouteSettings settings);
+typedef ScreenNameExtractor = String? Function(RouteSettings settings);
 
-String defaultNameExtractor(RouteSettings settings) => settings.name;
+String? defaultNameExtractor(RouteSettings settings) => settings.name;
+
+/// [RouteFilter] allows to filter out routes that should not be tracked.
+///
+/// By default, only [PageRoute]s are tracked.
+typedef RouteFilter = bool Function(Route<dynamic>? route);
+
+bool defaultRouteFilter(Route<dynamic>? route) => route is PageRoute;
 
 /// A [NavigatorObserver] that sends events to Firebase Analytics when the
-/// currently active [PageRoute] changes.
+/// currently active [ModalRoute] changes.
 ///
-/// When a route is pushed or popped, [nameExtractor] is used to extract a name
-/// from [RouteSettings] of the now active route and that name is sent to
-/// Firebase.
+/// When a route is pushed or popped, and if [routeFilter] is true,
+/// [nameExtractor] is used to extract a name  from [RouteSettings] of the now
+/// active route and that name is sent to Firebase.
 ///
 /// The following operations will result in sending a screen view event:
 /// ```dart
@@ -50,10 +54,10 @@ String defaultNameExtractor(RouteSettings settings) => settings.name;
 /// );
 /// ```
 ///
-/// You can also track screen views within your [PageRoute] by implementing
-/// [PageRouteAware] and subscribing it to [FirebaseAnalyticsObserver]. See the
-/// [PageRouteObserver] docs for an example.
-class FirebaseAnalyticsObserver extends RouteObserver<PageRoute<dynamic>> {
+/// You can also track screen views within your [ModalRoute] by implementing
+/// [RouteAware<ModalRoute<dynamic>>] and subscribing it to [FirebaseAnalyticsObserver]. See the
+/// [RouteObserver<ModalRoute<dynamic>>] docs for an example.
+class FirebaseAnalyticsObserver extends RouteObserver<ModalRoute<dynamic>> {
   /// Creates a [NavigatorObserver] that sends events to [FirebaseAnalytics].
   ///
   /// When a route is pushed or popped, [nameExtractor] is used to extract a
@@ -65,24 +69,27 @@ class FirebaseAnalyticsObserver extends RouteObserver<PageRoute<dynamic>> {
   /// exception. If `onError` is omitted, the exception will be printed using
   /// `debugPrint()`.
   FirebaseAnalyticsObserver({
-    @required this.analytics,
+    required this.analytics,
     this.nameExtractor = defaultNameExtractor,
-    Function(PlatformException error) onError,
+    this.routeFilter = defaultRouteFilter,
+    Function(PlatformException error)? onError,
   }) : _onError = onError;
 
   final FirebaseAnalytics analytics;
   final ScreenNameExtractor nameExtractor;
-  final void Function(PlatformException error) _onError;
+  final RouteFilter routeFilter;
+  final void Function(PlatformException error)? _onError;
 
-  void _sendScreenView(PageRoute<dynamic> route) {
-    final String screenName = nameExtractor(route.settings);
+  void _sendScreenView(Route<dynamic> route) {
+    final String? screenName = nameExtractor(route.settings);
     if (screenName != null) {
       analytics.setCurrentScreen(screenName: screenName).catchError(
         (Object error) {
+          final _onError = this._onError;
           if (_onError == null) {
             debugPrint('$FirebaseAnalyticsObserver: $error');
           } else {
-            _onError(error);
+            _onError(error as PlatformException);
           }
         },
         test: (Object error) => error is PlatformException,
@@ -91,25 +98,27 @@ class FirebaseAnalyticsObserver extends RouteObserver<PageRoute<dynamic>> {
   }
 
   @override
-  void didPush(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
-    if (route is PageRoute) {
+    if (routeFilter(route)) {
       _sendScreenView(route);
     }
   }
 
   @override
-  void didReplace({Route<dynamic> newRoute, Route<dynamic> oldRoute}) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
-    if (newRoute is PageRoute) {
+    if (newRoute != null && routeFilter(newRoute)) {
       _sendScreenView(newRoute);
     }
   }
 
   @override
-  void didPop(Route<dynamic> route, Route<dynamic> previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
-    if (previousRoute is PageRoute && route is PageRoute) {
+    if (previousRoute != null &&
+        routeFilter(previousRoute) &&
+        routeFilter(route)) {
       _sendScreenView(previousRoute);
     }
   }

@@ -1,3 +1,200 @@
+## 1.13.1
+
+ - **FIX**: update all Dart SDK version constraints to Dart >= 2.16.0 (#8184). ([df4a5bab](https://github.com/FirebaseExtended/flutterfire/commit/df4a5bab3c029399b4f257a5dd658d302efe3908))
+
+## 1.13.0
+
+ - **FEAT**: refactor error handling to preserve stack traces on platform exceptions (#8156). ([6ac77d99](https://github.com/FirebaseExtended/flutterfire/commit/6ac77d99042de2a1950f89b35972e3ee1116dc9f))
+
+## 1.12.0
+
+ - **FEAT**: bump Firebase iOS SDK to `8.11.0` & Android SDK to `29.0.4` (#7942). ([c23adf08](https://github.com/FirebaseExtended/flutterfire/commit/c23adf0853466941d0afb174dd425a43b44ce501))
+
+## 1.11.0
+
+ - **FIX**: bump Android `compileSdkVersion` to 31 (#7726). ([a9562bac](https://github.com/FirebaseExtended/flutterfire/commit/a9562bac60ba927fb3664a47a7f7eaceb277dca6))
+ - **FIX**: bump Firebase Android SDK version to `29.0.3` (from `29.0.0`). ([2ab4abaf](https://github.com/FirebaseExtended/flutterfire/commit/2ab4abafbed279183d298f129cd14aebb588c86d))
+ - **FIX**: workaround an SDK issue on Android where calling `initializeApp` when having `In App Messaging` installed causes a crash. ([8f5204e7](https://github.com/FirebaseExtended/flutterfire/commit/8f5204e7e59e92869d61764c051e5687e118282d))
+ - **FEAT**: bump Firebase iOS SDK version to `8.10.0`. (#7775). ([ac9709e0](https://github.com/FirebaseExtended/flutterfire/commit/ac9709e00a0e3d1706b793750ed2e65d9ae9440b))
+
+## 1.10.6
+
+ - **REFACTOR**: fix all `unnecessary_import` analyzer issues introduced with Flutter 2.8. ([7f0e82c9](https://github.com/FirebaseExtended/flutterfire/commit/7f0e82c978a3f5a707dd95c7e9136a3e106ff75e))
+
+## 1.10.5
+
+ - Update a dependency to the latest release.
+
+## 1.10.4
+
+ - Update a dependency to the latest release.
+
+## 1.10.3
+
+ - Update a dependency to the latest release.
+
+## 1.10.2
+
+ - Update a dependency to the latest release.
+
+## 1.10.1
+
+ - **REFACTOR**: migrate remaining examples & e2e tests to null-safety (#7393).
+
+## 1.10.0
+
+ - **FEAT**: support initializing default `FirebaseApp` instances from Dart (#6549).
+
+## 1.9.0
+
+ - **FEAT**: bump Firebase Android SDK version to `29.0.0` (#7296).
+ - **FEAT**: bump Firebase iOS SDK to `8.9.0` (#7289).
+
+## 1.8.0
+
+ - **FEAT**: Firebase iOS SDK version bumped to `8.8.0` (#7213).
+ - **REFACTOR**: remove deprecated Flutter Android v1 Embedding usages, including in example app (#7158).
+ - **STYLE**: macOS & iOS; explicitly include header that defines `TARGET_OS_OSX` (#7116).
+
+## 1.7.0
+
+ - **FEAT**: bump Firebase iOS SDK to `8.7.0` & Android SDK to `28.4.1` (#7083).
+ - **CHORE**: update gradle version across packages (#7054).
+
+## 1.6.0
+
+ - **FEAT**: update Firebase Android SDK to `28.3.1` & Firebase iOS SDK to `8.6.0` (#6847).
+
+## 1.5.0
+
+ - **STYLE**: enable additional lint rules (#6832).
+ - **FEAT**: lower iOS & macOS deployment targets for relevant plugins (#6757).
+ - **FEAT**: iOS sdk version bump 8.5.0. (#6786).
+
+## 1.4.0
+
+ - **FEAT**: bump Firebase iOS SDK version to 8.3.0 (#6568).
+ - **CHORE**: update v2 embedding support (#6506).
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+
+## 1.3.0
+
+ - **FEAT**: Upgrade Firebase Android BoM version to 28.1.0 (#6338).
+
+## 1.2.1
+
+ - **DOCS**: Add Flutter Favorite badge (#6190).
+
+## 1.2.0
+
+ - **FEAT**: upgrade Firebase Android SDK BoM version from 28.0.0 to 28.0.1.
+ - **FEAT**: upgrade Firebase JS SDK version to 8.6.1.
+ - **FIX**: podspec osx version checking script should use a version range instead of a single fixed version.
+
+## 1.1.1
+
+ - Update a dependency to the latest release.
+
+## 1.1.0
+
+ - **FEAT**: update iOS Firebase SDK from 7.3 to 7.11 (#5896).
+
+## 1.0.4
+
+ - **REFACTOR**: Share guard functions accross plugins (#5783).
+ - **CHORE**: update Web plugins to use Firebase JS SDK version 8.4.1 (#4464).
+
+## 1.0.3
+
+ - **REFACTOR**: Remove deprecated gradle property android.enableR8=true (#5463).
+ - **CHORE**: add repository urls to pubspecs (#5542).
+ - **CHORE**: bump min Dart SDK constraint to 2.12.0 (#5430).
+ - **CHORE**: publish packages (#5429).
+ - **CHORE**: publish packages.
+
+## 1.0.2
+
+ - Update a dependency to the latest release.
+
+## 1.0.1
+
+ - Update a dependency to the latest release.
+
+## 1.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 1.0.0-1.0.nullsafety.0
+
+ - Bump "firebase_core" to `1.0.0-1.0.nullsafety.0`.
+
+## 0.8.0-1.0.nullsafety.2
+
+ - **TESTS**: update mockito API usage in tests
+
+## 0.8.0-1.0.nullsafety.1
+
+ - **REFACTOR**: pubspec & dependency updates (#4932).
+ - **REFACTOR**: replace deprecated `RaisedButton` widget with `ElevatedButton`.
+
+## 0.8.0-1.0.nullsafety.0
+
+ - Bump "firebase_core" to `0.8.0-1.0.nullsafety.0`.
+
+## 0.8.0-nullsafety.1
+
+ - **FEAT**: bump firebase-core to 4.0.0-nullsafety.0 and firebase-core-web to 0.3.0-nullsafety.0.
+
+## 0.8.0-nullsafety.0
+
+- **FIX**: Bump package to 0.8.0 for nullsafety. (fixes issue #4728)
+
+## 0.7.0-nullsafety.0
+
+ - **REFACTOR**: Migrate non-nullable types (#4656).
+
+## 0.7.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add check on podspec to assist upgrading users deployment target.
+ - **BUILD**: commit Podfiles with 10.12 deployment target.
+ - **BUILD**: remove default sdk version, version should always come from firebase_core, or be user defined.
+ - **BUILD**: set macOS deployment target to 10.12 (from 10.11).
+ - **BREAKING** **BUILD**: set osx min supported platform version to 10.12.
+
+## 0.6.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: bump firebase-android-sdk to v26.2.0.
+ - **BREAKING** **REFACTOR**: remove all currently deprecated APIs.
+ - **BREAKING** **FEAT**: forward port to firebase-ios-sdk v7.3.0.
+   - Due to this SDK upgrade, iOS 10 is now the minimum supported version by FlutterFire. Please update your build target version.
+ - **CHORE**: harmonize dependencies and version handling.
+
+## 0.5.3
+
+ - **FEAT**: bump android `com.android.tools.build` & `'com.google.gms:google-services` versions (#4269).
+
+## 0.5.2+1
+
+ - Update a dependency to the latest release.
+
+## 0.5.2
+
+ - **FEAT**: add not-in & != query support (#3748).
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: bump `compileSdkVersion` to 29 in preparation for upcoming Play Store requirement.
+ - **CHORE**: publish packages.
+ - **CHORE**: publish packages.
+
+## 0.5.1
+
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: update Firebase Android SDK BoM version to 25.12.0 (from 25.3.1).
+ - **FEAT**: update Firebase iOS SDK version to 6.33.0 (from 6.26.0).
+
 ## 0.5.0+1
 
  - **FIX**: remove unused dart:async import (#3611).
@@ -96,7 +293,7 @@
 
 ## 0.4.1+4
 
-* Remove visibleForTesting annotation from FirebaseApp constructor. 
+* Remove visibleForTesting annotation from FirebaseApp constructor.
 
 ## 0.4.1+3
 
