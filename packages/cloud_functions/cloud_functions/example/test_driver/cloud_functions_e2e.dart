@@ -7,18 +7,20 @@ import 'package:drive/drive.dart' as drive;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'firebase_config.dart';
 import 'sample.dart' as data;
 
 String kTestFunctionDefaultRegion = 'testFunctionDefaultRegion';
 String kTestFunctionCustomRegion = 'testFunctionCustomRegion';
 String kTestFunctionTimeout = 'testFunctionTimeout';
+String kTestMapConvertType = 'testMapConvertType';
 
 void testsMain() {
-  HttpsCallable callable;
+  late HttpsCallable callable;
+
   setUpAll(() async {
-    await Firebase.initializeApp();
-    FirebaseFunctions.instance
-        .useFunctionsEmulator(origin: 'http://localhost:5001');
+    await Firebase.initializeApp(options: TestFirebaseConfig.platformOptions);
+    FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
     callable =
         FirebaseFunctions.instance.httpsCallable(kTestFunctionDefaultRegion);
   });
@@ -78,6 +80,18 @@ void testsMain() {
       });
       expect(result.data, equals(data.deepList));
     });
+
+    test(
+      '[HttpsCallableResult.data] should return Map<String, dynamic> type for returned objects',
+      () async {
+        HttpsCallable callable =
+            FirebaseFunctions.instance.httpsCallable(kTestMapConvertType);
+
+        var result = await callable();
+
+        expect(result.data, isA<Map<String, dynamic>>());
+      },
+    );
   });
 
   group('FirebaseFunctionsException', () {
@@ -91,7 +105,7 @@ void testsMain() {
         expect(e.message, equals('Invalid test requested.'));
         return;
       } catch (e) {
-        fail(e);
+        fail('$e');
       }
     });
 
@@ -106,18 +120,21 @@ void testsMain() {
       } on FirebaseFunctionsException catch (e) {
         expect(e.code, equals('cancelled'));
         expect(
-            e.message,
-            equals(
-                'Response data was requested to be sent as part of an Error payload, so here we are!'));
+          e.message,
+          equals(
+            'Response data was requested to be sent as part of an Error payload, so here we are!',
+          ),
+        );
         expect(e.details, equals(data.deepMap));
       } catch (e) {
-        fail(e);
+        fail('$e');
       }
     });
   });
 
   group('region', () {
-    HttpsCallable customRegionCallable;
+    late HttpsCallable customRegionCallable;
+
     setUpAll(() async {
       customRegionCallable =
           FirebaseFunctions.instanceFor(region: 'europe-west1')
@@ -131,24 +148,25 @@ void testsMain() {
   });
 
   group('HttpsCallableOptions', () {
-    HttpsCallable timeoutCallable;
+    late HttpsCallable timeoutCallable;
 
     setUpAll(() async {
       timeoutCallable = FirebaseFunctions.instance.httpsCallable(
-          kTestFunctionTimeout,
-          options: HttpsCallableOptions(timeout: Duration(seconds: 3)));
+        kTestFunctionTimeout,
+        options: HttpsCallableOptions(timeout: const Duration(seconds: 3)),
+      );
     });
 
     test('times out when the provided timeout is exceeded', () async {
       try {
         await timeoutCallable({
-          'testTimeout': Duration(seconds: 6).inMilliseconds.toString(),
+          'testTimeout': const Duration(seconds: 6).inMilliseconds.toString(),
         });
         fail('Should have thrown');
       } on FirebaseFunctionsException catch (e) {
         expect(e.code, equals('deadline-exceeded'));
       } catch (e) {
-        fail(e);
+        fail('$e');
       }
     });
   });

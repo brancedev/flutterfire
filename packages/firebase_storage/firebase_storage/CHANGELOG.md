@@ -1,3 +1,281 @@
+## 10.3.10
+
+ - Update a dependency to the latest release.
+
+## 10.3.9
+
+ - Update a dependency to the latest release.
+
+## 10.3.8
+
+ - Update a dependency to the latest release.
+
+## 10.3.7
+
+ - Update a dependency to the latest release.
+
+## 10.3.6
+
+ - Update a dependency to the latest release.
+
+## 10.3.5
+
+ - Update a dependency to the latest release.
+
+## 10.3.4
+
+ - Update a dependency to the latest release.
+
+## 10.3.3
+
+ - Update a dependency to the latest release.
+
+## 10.3.2
+
+ - Update a dependency to the latest release.
+
+## 10.3.1
+
+ - **FIX**: bump `firebase_core_platform_interface` version to fix previous release. ([bea70ea5](https://github.com/firebase/flutterfire/commit/bea70ea5cbbb62cbfd2a7a74ae3a07cb12b3ee5a))
+
+## 10.3.0
+
+ - **FEAT**: Bump Firebase iOS SDK to `9.2.0` (#8594). ([79610162](https://github.com/firebase/flutterfire/commit/79610162460b8877f3bc727464a7065106f08079))
+
+## 10.2.18
+
+ - **REFACTOR**: migrate from hash* to Object.hash* (#8797). ([3dfc0997](https://github.com/firebase/flutterfire/commit/3dfc0997050ee4351207c355b2c22b46885f971f))
+ - **REFACTOR**: use "firebase" instead of "FirebaseExtended" as organisation in all links for this repository (#8791). ([d90b8357](https://github.com/firebase/flutterfire/commit/d90b8357db01d65e753021358668f0b129713e6b))
+ - **DOCS**: point to "firebase.google" domain for hyperlinks in the usage section of `README.md` files (#8814). ([78006e0d](https://github.com/firebase/flutterfire/commit/78006e0d5b9dce8038ce3606a43ddcbc8a4a71b9))
+
+## 10.2.17
+
+ - **DOCS**: use camel case style for "FlutterFire" in `README.md` (#8752). ([5c5dcaf1](https://github.com/firebase/flutterfire/commit/5c5dcaf1909dacf293fec5e79461d43468a13279))
+
+## 10.2.16
+
+ - Update a dependency to the latest release.
+
+## 10.2.15
+
+ - Update a dependency to the latest release.
+
+## 10.2.14
+
+ - **REFACTOR**: Remove deprecated `Tasks.call()` API from android. (#8421). ([461bba5a](https://github.com/firebase/flutterfire/commit/461bba5a510b341b3b9bd414c9412944714e9305))
+
+## 10.2.13
+
+ - Update a dependency to the latest release.
+
+## 10.2.12
+
+ - Update a dependency to the latest release.
+
+## 10.2.11
+
+ - **FIX**: Fix `UploadTask.cancel()` so that it completes when called. (#8417). ([19ee62c3](https://github.com/firebase/flutterfire/commit/19ee62c33f34278dac082c11bf7574785e60abb5))
+
+## 10.2.10
+
+ - Update a dependency to the latest release.
+
+## 10.2.9
+
+ - **FIX**: update all Dart SDK version constraints to Dart >= 2.16.0 (#8184). ([df4a5bab](https://github.com/firebase/flutterfire/commit/df4a5bab3c029399b4f257a5dd658d302efe3908))
+
+## 10.2.8
+
+ - Update a dependency to the latest release.
+
+## 10.2.7
+
+- Update a dependency to the latest release.
+
+## 10.2.6
+
+ - Update a dependency to the latest release.
+
+## 10.2.5
+
+ - **FIX**: bump Android `compileSdkVersion` to 31 (#7726). ([a9562bac](https://github.com/firebase/flutterfire/commit/a9562bac60ba927fb3664a47a7f7eaceb277dca6))
+
+## 10.2.4
+
+ - **REFACTOR**: fix all `unnecessary_import` analyzer issues introduced with Flutter 2.8. ([7f0e82c9](https://github.com/firebase/flutterfire/commit/7f0e82c978a3f5a707dd95c7e9136a3e106ff75e))
+
+## 10.2.3
+
+ - Update a dependency to the latest release.
+
+## 10.2.2
+
+ - Update a dependency to the latest release.
+
+## 10.2.1
+
+ - Update a dependency to the latest release.
+
+## 10.2.0
+
+ - **REFACTOR**: migrate remaining examples & e2e tests to null-safety (#7393).
+ - **FEAT**: automatically inject Firebase JS SDKs (#7359).
+
+## 10.1.0
+
+ - **FEAT**: support initializing default `FirebaseApp` instances from Dart (#6549).
+
+## 10.0.7
+
+ - Update a dependency to the latest release.
+
+## 10.0.6
+
+ - **REFACTOR**: remove deprecated Flutter Android v1 Embedding usages, including in example app (#7158).
+ - **STYLE**: macOS & iOS; explicitly include header that defines `TARGET_OS_OSX` (#7116).
+
+## 10.0.5
+
+ - **FIX**: remove https port number from `downloadUrl` for `iOS` (#7097).
+
+## 10.0.4
+
+ - **FIX**: fix localhost url parsing for Storage Emulator (#7003).
+ - **CHORE**: update gradle version across packages (#7054).
+
+## 10.0.3
+
+ - **FIX**: accept google storage bucket urls (#6848).
+
+## 10.0.2
+
+ - Update a dependency to the latest release.
+
+## 10.0.1
+
+ - **FIX**: reinstate deprecated emulator apis (#6626).
+
+## 10.0.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: Use `mappedHost` instead of `host` (#6539).
+ - **CHORE**: update v2 embedding support (#6506).
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+ - **BREAKING** **FEAT**: use<product>Emulator(host, port) API update.
+ - **BREAKING** **FEAT**: use<product>Emulator(host, port) API update (#6439).
+
+## 9.0.0
+
+> Note: This release has breaking changes.
+
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+ - **BREAKING** **FEAT**: useStorageEmulator(host, port) API update.
+
+## 8.1.3
+
+ - Update a dependency to the latest release.
+
+## 8.1.2
+
+ - **FIX**: refFromUrl parse url (#6353).
+
+## 8.1.1
+
+ - **DOCS**: Add Flutter Favorite badge (#6190).
+
+## 8.1.0
+
+ - **FEAT**: add support for the Firebase Storage emulator via `useEmulator` (#5936).
+ - **FEAT**: upgrade Firebase JS SDK version to 8.6.1.
+ - **FIX**: podspec osx version checking script should use a version range instead of a single fixed version.
+
+## 8.0.6
+
+ - Update a dependency to the latest release.
+
+## 8.0.5
+
+ - **FIX**: secondary storage buckets now work as expected on Web (#5863).
+
+## 8.0.4
+
+ - Update a dependency to the latest release.
+
+## 8.0.3
+
+ - **FIX**: improve refFromURL http regex (#5682).
+
+## 8.0.2
+
+ - Update a dependency to the latest release.
+
+## 8.0.1
+
+ - **DOCS**: remove incorrect ARCHS in ios examples (#5450).
+ - **CHORE**: bump min Dart SDK constraint to 2.12.0 (#5430).
+ - **CHORE**: publish packages (#5429).
+ - **CHORE**: publish packages.
+ - **CHORE**: rm dev dependencies breaking CI (#5221).
+
+## 8.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 8.0.0-1.0.nullsafety.1
+
+ - Update a dependency to the latest release.
+
+## 8.0.0-1.0.nullsafety.0
+
+ - **REFACTOR**: Migrate Firebase Storage to nnbd (#4753).
+
+## 7.0.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: handle ArrayIndexOutOfBoundsException (fixes #4334) (#4638).
+ - **FEAT**: add check on podspec to assist upgrading users deployment target.
+ - **BUILD**: commit Podfiles with 10.12 deployment target.
+ - **BUILD**: remove default sdk version, version should always come from firebase_core, or be user defined.
+ - **BUILD**: set macOS deployment target to 10.12 (from 10.11).
+ - **BREAKING** **BUILD**: set osx min supported platform version to 10.12.
+
+## 6.0.0
+
+ - **FEAT**: bump firebase-android-sdk BoM to 25.13.0.
+ - **BREAKING** **REFACTOR**: remove all currently deprecated APIs.
+ - **BREAKING** **FEAT**: forward port to firebase-ios-sdk v7.3.0.
+   - Due to this SDK upgrade, iOS 10 is now the minimum supported version by FlutterFire. Please update your build target version.
+ - **CHORE**: harmonize dependencies and version handling.
+
+## 5.2.0
+
+ - **FEAT**: bump android `com.android.tools.build` & `'com.google.gms:google-services` versions (#4269).
+ - **CHORE**: Migrate iOS example projects (#4222).
+
+## 5.1.0
+
+ - **TEST**: skip ios pause/resume check.
+ - **TEST**: skip ios pause/resume check.
+ - **TEST**: Opt-out from null safety. (#4204).
+ - **FEAT**: web support (#3917).
+ - **FEAT**: Tweaks to firebase_storage for the upcoming web version. (#4028).
+ - **CHORE**: bump gradle wrapper to 5.6.4 (#4158).
+
+## 5.0.1
+
+ - Update a dependency to the latest release.
+
+## 5.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 5.0.0-dev.4
+
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: update Firebase iOS SDK version to 6.33.0 (from 6.26.0).
+
 ## 5.0.0-dev.3
 
  - **FEAT**: rework (#3612).
@@ -10,7 +288,7 @@
 
 ## 5.0.0-dev.1
 
-As part of our on-going work for [#2582](https://github.com/FirebaseExtended/flutterfire/issues/2582) this is our Firebase Storage rework changes.
+As part of our on-going work for [#2582](https://github.com/firebase/flutterfire/issues/2582) this is our Firebase Storage rework changes.
 
 Overall, Firebase Storage has been heavily reworked to bring it inline with the federated plugin setup along with adding new features,
 documentation and many more unit and end-to-end tests (tested on Android, iOS & MacOS).

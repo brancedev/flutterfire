@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class FlutterFirebaseAuthPluginException extends Exception {
@@ -21,6 +22,15 @@ public class FlutterFirebaseAuthPluginException extends Exception {
 
     this.code = code;
     this.message = message;
+  }
+
+  FlutterFirebaseAuthPluginException(
+      @NonNull String code, @NonNull String message, @NonNull Map<String, Object> additionalData) {
+    super(message, null);
+
+    this.code = code;
+    this.message = message;
+    this.additionalData = additionalData;
   }
 
   FlutterFirebaseAuthPluginException(@NonNull Exception nativeException, Throwable cause) {
@@ -74,8 +84,13 @@ public class FlutterFirebaseAuthPluginException extends Exception {
         "NO_SUCH_PROVIDER", "User was not linked to an account with the given provider.");
   }
 
+  static FlutterFirebaseAuthPluginException alreadyLinkedProvider() {
+    return new FlutterFirebaseAuthPluginException(
+        "PROVIDER_ALREADY_LINKED", "User has already been linked to the given provider.");
+  }
+
   public String getCode() {
-    return code.toLowerCase().replace("error_", "").replace("_", "-");
+    return code.toLowerCase(Locale.ROOT).replace("error_", "").replace("_", "-");
   }
 
   @Override

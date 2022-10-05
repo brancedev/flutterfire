@@ -1,3 +1,363 @@
+## 3.5.0
+
+ - **FEAT**: add OAuth Access Token support to sign in with providers ([#9593](https://github.com/firebase/flutterfire/issues/9593)). ([cb6661bb](https://github.com/firebase/flutterfire/commit/cb6661bbc701031d6f920ace3a6efc8e8d56aa4c))
+ - **FEAT**: Bump Firebase iOS SDK to `9.6.0` ([#9531](https://github.com/firebase/flutterfire/issues/9531)). ([2138f4aa](https://github.com/firebase/flutterfire/commit/2138f4aaaace51d5dce4809fb42e1e4ff20ed251))
+
+## 3.4.9
+
+ - Update a dependency to the latest release.
+
+## 3.4.8
+
+ - **FIX**: fix `queryGet()` & `namedQueryGet()`. Check if `query` is `[NSNull null]` value ([#9410](https://github.com/firebase/flutterfire/issues/9410)). ([ae035fe2](https://github.com/firebase/flutterfire/commit/ae035fe2b060264153386ae5c2a1eb90c22e90f3))
+
+## 3.4.7
+
+ - Update a dependency to the latest release.
+
+## 3.4.6
+
+ - Update a dependency to the latest release.
+
+## 3.4.5
+
+ - Update a dependency to the latest release.
+
+## 3.4.4
+
+ - **FIX**: stop `FirebaseError` appearing in console on hot restart & hot refresh ([#9321](https://github.com/firebase/flutterfire/issues/9321)). ([4ba0ff9d](https://github.com/firebase/flutterfire/commit/4ba0ff9d9c7d13f7e040d80375d6db3edb8d37d5))
+
+## 3.4.3
+
+ - Update a dependency to the latest release.
+
+## 3.4.2
+
+ - Update a dependency to the latest release.
+
+## 3.4.1
+
+ - Update a dependency to the latest release.
+
+## 3.4.0
+
+ - **FEAT**: add max attempts for Firestore transactions ([#9163](https://github.com/firebase/flutterfire/issues/9163)). ([9da7cc36](https://github.com/firebase/flutterfire/commit/9da7cc36cb266e4f5a0de26dfe727e0a4687f1a0))
+ - **FEAT**: update to 9.3.0 ([#9137](https://github.com/firebase/flutterfire/issues/9137)). ([97f6417b](https://github.com/firebase/flutterfire/commit/97f6417bf66f88e6621afa177c73245b9a7d5c73))
+
+## 3.3.0
+
+ - **FEAT**: upgrade to support v9.8.1 Firebase JS SDK ([#8235](https://github.com/firebase/flutterfire/issues/8235)). ([4b417af5](https://github.com/firebase/flutterfire/commit/4b417af574bb8a32ca8e4b3ab2ff253a22be9903))
+
+## 3.2.1
+
+ - **FIX**: bump `firebase_core_platform_interface` version to fix previous release. ([bea70ea5](https://github.com/firebase/flutterfire/commit/bea70ea5cbbb62cbfd2a7a74ae3a07cb12b3ee5a))
+
+## 3.2.0
+
+ - **FEAT**: Bump Firebase iOS SDK to `9.2.0` (#8594). ([79610162](https://github.com/firebase/flutterfire/commit/79610162460b8877f3bc727464a7065106f08079))
+
+## 3.1.18
+
+ - **REFACTOR**: use `firebase.google.com` link for `homepage` in `pubspec.yaml` (#8724). ([fd3f3102](https://github.com/firebase/flutterfire/commit/fd3f3102a0614e0e155756239a57b54fab324c2c))
+ - **REFACTOR**: migrate from hash* to Object.hash* (#8797). ([3dfc0997](https://github.com/firebase/flutterfire/commit/3dfc0997050ee4351207c355b2c22b46885f971f))
+ - **REFACTOR**: use "firebase" instead of "FirebaseExtended" as organisation in all links for this repository (#8791). ([d90b8357](https://github.com/firebase/flutterfire/commit/d90b8357db01d65e753021358668f0b129713e6b))
+
+## 3.1.17
+
+ - Update a dependency to the latest release.
+
+## 3.1.16
+
+ - **REFACTOR**: remove deprecated `Tasks.call` for android and replace with `TaskCompletionSource`. (#8522). ([45e27201](https://github.com/firebase/flutterfire/commit/45e27201480088fab71af60963001baeae61d80d))
+
+## 3.1.15
+
+ - Update a dependency to the latest release.
+
+## 3.1.14
+
+ - Update a dependency to the latest release.
+
+## 3.1.13
+
+ - Update a dependency to the latest release.
+
+## 3.1.12
+
+ - Update a dependency to the latest release.
+
+## 3.1.11
+
+ - **REFACTOR**: recreate ios, android, web and macOS folders for example app (#8255). ([cdae0613](https://github.com/firebase/flutterfire/commit/cdae0613a359da41013721f601c20169807d214f))
+ - **DOCS**: Fix method name typo in code documentation (#8291). ([7b4e06db](https://github.com/firebase/flutterfire/commit/7b4e06db305ff9f785a1bfcf1888fec1a53970c4))
+
+## 3.1.10
+
+ - **FIX**: update all Dart SDK version constraints to Dart >= 2.16.0 (#8184). ([df4a5bab](https://github.com/firebase/flutterfire/commit/df4a5bab3c029399b4f257a5dd658d302efe3908))
+
+## 3.1.9
+
+ - Update a dependency to the latest release.
+
+## 3.1.8
+
+ - Update a dependency to the latest release.
+
+## 3.1.7
+
+ - **FIX**: Fix Android Firestore transaction crash when running in background caused by `null` `Activity`. (#7627). ([8d60d474](https://github.com/firebase/flutterfire/commit/8d60d474438fccc5d6dcb41b840221ae385a853c))
+
+## 3.1.6
+
+ - Update a dependency to the latest release.
+
+## 3.1.5
+
+ - **REFACTOR**: fix all `unnecessary_import` analyzer issues introduced with Flutter 2.8. ([7f0e82c9](https://github.com/firebase/flutterfire/commit/7f0e82c978a3f5a707dd95c7e9136a3e106ff75e))
+
+## 3.1.4
+
+ - Update a dependency to the latest release.
+
+## 3.1.3
+
+ - **DOCS**: update firestore dartpad example.
+
+## 3.1.2
+
+ - Update a dependency to the latest release.
+
+## 3.1.1
+
+ - **REFACTOR**: migrate remaining examples & e2e tests to null-safety (#7393).
+ - **FIX**: suppress Java unchecked cast lint warning in Android plugin (#7431).
+
+## 3.1.0
+
+ - **FEAT**: support initializing default `FirebaseApp` instances from Dart (#6549).
+
+## 3.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: update Android `minSdk` version to 19 as this is required by Firebase Android SDK `29.0.0` (#7298).
+
+## 2.5.4
+
+ - **REFACTOR**: remove deprecated Flutter Android v1 Embedding usages, including in example app (#7147).
+ - **STYLE**: macOS & iOS; explicitly include header that defines `TARGET_OS_OSX` (#7116).
+
+## 2.5.3
+
+ - **FIX**: value encoding fails when using `DocumentReference` & `withConverter` (#7020).
+ - **FIX**: propagate query index link  to firebase console for user (#7087).
+ - **FIX**: fixed a bug where `withConverter.endBeforeDocument` incorrectly behaved as `endAtDocument`.
+ - **FIX**: an issue where `Query.==` throws when using `withConverter` (#6997).
+ - **CHORE**: update gradle version across packages (#7054).
+
+## 2.5.2
+
+ - **REVERT**: Firestore cache snapshot connections with underlying native listener (#6819) (#6974).
+ - **CHORE**: Reduce hash conflicts on objects (#6928).
+
+## 2.5.1
+
+ - Update a dependency to the latest release.
+
+## 2.5.0
+
+ - **STYLE**: enable additional lint rules (#6832).
+ - **FIX**: transactionHandler was losing ref to self in blocks (#6791).
+ - **FIX**: allow querying on 'is not null' properties (#6788).
+ - **FIX**: improve query filter assertions (#6627).
+ - **FEAT**: cache snapshot connections with underlying native listener (#6819).
+ - **FEAT**: override ==/hashCode for Firestore Queries (#6797).
+ - **DOCS**: Transaction timeout correction (#6761).
+
+## 2.4.0
+
+ - **FIX**: export PersistenceSettings (#6603).
+ - **FIX**: Fixed variable name (#6564).
+ - **FIX**: withConverter examples in docs (#6438).
+ - **FIX**: DocumentReference @sealed annotation (#6436).
+ - **FEAT**: useFirestoreEmulator(host, port) API for firestore (#6428).
+ - **CHORE**: update v2 embedding support (#6506).
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+
+## 2.3.0
+
+ - **FIX**: withConverter examples in docs (#6438).
+ - **FIX**: DocumentReference @sealed annotation (#6436).
+ - **FEAT**: useFirestoreEmulator(host, port) API for firestore (#6428).
+ - **CHORE**: rm deprecated jcenter repository (#6431).
+
+## 2.2.2
+
+ - Update a dependency to the latest release.
+
+## 2.2.1
+
+ - **TEST**: error handling for loadBundle() & namedQueryGet() (#6197).
+ - **TEST**: improve query assertions (#6249).
+ - **TEST**: update and assert documentId field & isNotEqualTo filter test (#6225).
+ - **DOCS**: Add Flutter Favorite badge (#6190).
+
+## 2.2.0
+
+ - **FEAT**: support for `loadBundle()` & `namedQueryGet()` (#6037).
+ - **FEAT**: upgrade Firebase JS SDK version to 8.6.1.
+ - **FIX**: podspec osx version checking script should use a version range instead of a single fixed version.
+ - **FIX**: pass GetOptions to web Query.get (#6132).
+
+## 2.1.0
+
+ - **FIX**: Fix FirebaseOptions hashCode (#3263).
+ - **FEAT**: Add withConverter for Query (#6065).
+ - **DOCS**: add QueryDocumentSnapshot to the list of classes that received a breaking change (#6092).
+ - **CHORE**: publish packages (#6022).
+ - **CHORE**: publish packages.
+
+## 2.0.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: Add withConverter function to CollectionReference, DocumentReference and Query (#6015).
+    This new method allows interacting with collections/documents in a type-safe way:
+
+    ```dart
+    final modelsRef = FirebaseFirestore
+        .instance
+        .collection('models')
+        .withConverter<Model>(
+          fromFirestore: (snapshot, _) => Model.fromJson(snapshot.data()!),
+          toFirestore: (model, _) => model.toJson(),
+        );
+
+    Future<void> main() async {
+      // Writes now take a Model as parameter instead of a Map
+      await modelsRef.add(Model());
+      final Model model = await modelsRef.doc('123').get().then((s) => s.data());
+    }
+    ```
+
+ - **BREAKING** **REFACTOR**: `DocumentReference`, `CollectionReference`, `Query`, `DocumentSnapshot`,
+   `CollectionSnapshot`, `QuerySnapshot`, `QueryDocumentSnapshot`, `Transaction.get`, `Transaction.set`
+   and `WriteBatch.set` now take an extra generic parameter.  (#6015).
+
+   See the [migration guide](https://firebase.flutter.dev/docs/firestore/2.0.0_migration) for more
+   information on how to update your code.
+
+ - **BREAKING** **FEAT**: convert FieldPath parameters from dynamic to Object (#5997).
+
+## 1.0.7
+
+ - **FIX**: Clear event listeners when firebase core is reinitialised (#5852).
+
+## 1.0.6
+
+ - Update a dependency to the latest release.
+
+## 1.0.5
+
+ - Update a dependency to the latest release.
+
+## 1.0.4
+
+ - **FIX**: made QueryDocumentSnapshot.data() non-nullable (#5476).
+ - **CHORE**: add repository urls to pubspecs (#5542).
+
+## 1.0.3
+
+ - **FIX**: cannot store null values in firestore on the web (#5335).
+ - **DOCS**: remove incorrect ARCHS in ios examples (#5450).
+ - **CHORE**: bump min Dart SDK constraint to 2.12.0 (#5430).
+ - **CHORE**: publish packages (#5429).
+
+## 1.0.2
+
+ - **FIX**: cannot store null values in firestore on the web (#5335).
+
+## 1.0.1
+
+ - Update a dependency to the latest release.
+
+## 1.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 1.0.0-1.0.nullsafety.0
+
+ - Bump "cloud_firestore" to `1.0.0-1.0.nullsafety.0`.
+
+## 0.17.0-1.0.nullsafety.2
+
+ - **FIX**: Fix type issue. (#5081).
+ - **FIX**: Fixed crashes due to null `Settings` (#5031).
+
+## 0.17.0-1.0.nullsafety.1
+
+ - Update a dependency to the latest release.
+
+## 0.17.0-1.0.nullsafety.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **REFACTOR**: migrate to NNBD (#4780).
+
+## 0.16.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: add missing symlinks (fixes #4628).
+ - **FEAT**: add check on podspec to assist upgrading users deployment target.
+ - **CHORE**: add missing file license headers.
+ - **BUILD**: commit Podfiles with 10.12 deployment target.
+ - **BUILD**: remove default sdk version, version should always come from firebase_core, or be user defined.
+ - **BUILD**: set macOS deployment target to 10.12 (from 10.11).
+ - **BREAKING** **BUILD**: set osx min supported platform version to 10.12.
+
+## 0.15.0
+
+> Note: This release has breaking changes.
+
+ - **FIX**: Add missing sdk version constraints inside example pubspec.yaml (#4604).
+ - **FIX**: ensure web FieldValue types are converted (#4247).
+ - **FEAT**: Move Snapshot handling into a EventChannel (#4209).
+ - **BREAKING** **REFACTOR**: remove all currently deprecated APIs.
+ - **BREAKING** **FEAT**: forward port to firebase-ios-sdk v7.3.0.
+   - Due to this SDK upgrade, iOS 10 is now the minimum supported version by FlutterFire. Please update your build target version.
+ - **CHORE**: harmonize dependencies and version handling.
+
+## 0.14.4
+
+ - **FEAT**: bump android `com.android.tools.build` & `'com.google.gms:google-services` versions (#4269).
+ - **CHORE**: Migrate iOS example projects (#4222).
+
+## 0.14.3+1
+
+ - Update a dependency to the latest release.
+
+## 0.14.3
+
+ - **FEAT**: migrate firebase interop files to local repository (#3973).
+ - **FEAT**: add not-in & != query support (#3748).
+ - **FEAT**: bump `compileSdkVersion` to 29 in preparation for upcoming Play Store requirement.
+ - **FEAT** [WEB] `FirebaseFirestore.enablePersistence` now accepts `PersistenceSettings`
+ - **FEAT** [WEB] adds `PersistenceSettings` class
+ - **FEAT** [WEB] adds support for `FirebaseFirestore.clearPersistence`
+ - **FEAT** [WEB] adds support for `FirebaseFirestore.terminate`
+ - **FEAT** [WEB] adds support for `FirebaseFirestore.waitForPendingWrites`
+ - **FEAT** [WEB] adds support for `SetOptions.mergeFields`
+ - **FEAT** [WEB] adds `GetOptions` support for querying against server/cache
+ - **FEAT** [WEB] adds support for `Query.limitToLast`
+ - **FEAT** [WEB] adds support for `FirebaseFirestore.snapshotsInSync`
+
+## 0.14.2
+
+ - **FEAT**: bump compileSdkVersion to 29 (#3975).
+ - **FEAT**: update Firebase iOS SDK version to 6.33.0 (from 6.26.0).
+ - **CHORE**: update Firestore example app podfile.
+
 ## 0.14.1+3
 
  - **FIX**: remove unused dart:async import (#3611).
@@ -29,7 +389,7 @@
 * Fixed issue #3210 (`Query.orderBy(FieldPath.documentId)` throws exception).
 * Fixed issue #3237 (`DocumentReference` not being parsed correctly).
 * Bump `cloud_firestore_web` dependency.
-* Bump `cloud_firestore_platform_interface` dependency to fix 2 race conditions. [(#3251)](https://github.com/FirebaseExtended/flutterfire/pull/3251)
+* Bump `cloud_firestore_platform_interface` dependency to fix 2 race conditions. [(#3251)](https://github.com/firebase/flutterfire/pull/3251)
 
 ## 0.14.0
 

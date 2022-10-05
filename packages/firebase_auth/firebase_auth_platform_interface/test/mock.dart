@@ -3,53 +3,51 @@
 // found in the LICENSE file.
 
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+import 'package:firebase_auth_platform_interface/src/method_channel/method_channel_firebase_auth.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_auth_platform_interface/src/method_channel/method_channel_firebase_auth.dart';
 
 typedef MethodCallCallback = dynamic Function(MethodCall methodCall);
-typedef Callback(MethodCall call);
+typedef Callback = void Function(MethodCall call);
 
 // mock values
-final String TEST_PHONE_NUMBER = '5555555555';
+const String TEST_PHONE_NUMBER = '5555555555';
 
 int mockHandleId = 0;
 int get nextMockHandleId => mockHandleId++;
 
-setupFirebaseAuthMocks([Callback customHandlers]) {
+void setupFirebaseAuthMocks([Callback? customHandlers]) {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {
-    if (call.method == 'Firebase#initializeCore') {
-      return [
-        {
-          'name': defaultFirebaseAppName,
-          'options': {
-            'apiKey': '123',
-            'appId': '123',
-            'messagingSenderId': '123',
-            'projectId': '123',
-          },
-          'pluginConstants': {},
-        }
-      ];
-    }
+  setupFirebaseCoreMocks();
+}
 
-    if (call.method == 'Firebase#initializeApp') {
-      return {
-        'name': call.arguments['appName'],
-        'options': call.arguments['options'],
-        'pluginConstants': {},
-      };
+void handleEventChannel(
+  final String name, [
+  List<MethodCall>? log,
+]) {
+  MethodChannel(name).setMockMethodCallHandler((MethodCall methodCall) async {
+    log?.add(methodCall);
+    switch (methodCall.method) {
+      case 'listen':
+        break;
+      case 'cancel':
+      default:
+        return null;
     }
-
-    if (customHandlers != null) {
-      customHandlers(call);
-    }
-
-    return null;
   });
+}
+
+Future<void> injectEventChannelResponse(
+  String channelName,
+  Map<String, dynamic> event,
+) async {
+  await ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+    channelName,
+    MethodChannelFirebaseAuth.channel.codec.encodeSuccessEnvelope(event),
+    (_) {},
+  );
 }
 
 void handleMethodCall(MethodCallCallback methodCallCallback) =>
@@ -57,7 +55,7 @@ void handleMethodCall(MethodCallCallback methodCallCallback) =>
       return await methodCallCallback(call);
     });
 
-Future<void> simulateEvent(String name, Map<String, dynamic> user) async {
+Future<void> simulateEvent(String name, Map<String, dynamic>? user) async {
   await ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
     MethodChannelFirebaseAuth.channel.name,
     MethodChannelFirebaseAuth.channel.codec.encodeMethodCall(
@@ -70,22 +68,24 @@ Future<void> simulateEvent(String name, Map<String, dynamic> user) async {
   );
 }
 
-Future<void> testExceptionHandling(String type, Function testMethod) async {
-  try {
-    await testMethod();
-  } on FirebaseAuthException catch (_) {
-    if (type == 'PLATFORM' || type == 'EXCEPTION') {
-      return;
-    }
-    fail(
-        'testExceptionHandling: ${testMethod} threw unexpected FirebaseAuthException');
-  } catch (e) {
-    fail('testExceptionHandling: ${testMethod} threw invalid exception ${e}');
-  }
+Future<void> testExceptionHandling(
+  String type,
+  void Function() testMethod,
+) async {
+  await expectLater(
+    () async => testMethod(),
+    anyOf([
+      completes,
+      if (type == 'PLATFORM' || type == 'EXCEPTION')
+        throwsA(isA<FirebaseAuthException>())
+    ]),
+  );
 }
 
 Map<String, dynamic> generateUser(
-    Map<String, dynamic> user, Map<String, dynamic> updatedInfo) {
+  Map<String, dynamic> user,
+  Map<String, dynamic> updatedInfo,
+) {
   Map<String, dynamic> kMockUpdatedUser = Map<String, dynamic>.from(user);
   kMockUpdatedUser.addAll(updatedInfo);
   return kMockUpdatedUser;

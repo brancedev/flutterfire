@@ -1,3 +1,4 @@
+// ignore_for_file: require_trailing_commas
 // Copyright 2020 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -18,15 +19,16 @@ class MethodChannelFirebaseApp extends FirebaseAppPlatform {
     String name,
     FirebaseOptions options, {
     isAutomaticDataCollectionEnabled,
-  }) : super(name, options) {
-    _isAutomaticDataCollectionEnabled =
-        isAutomaticDataCollectionEnabled ?? false;
-  }
+  })  : _isAutomaticDataCollectionEnabled =
+            isAutomaticDataCollectionEnabled ?? false,
+        super(name, options);
 
   /// Keeps track of whether this app has been deleted by the user.
   bool _isDeleted = false;
 
   bool _isAutomaticDataCollectionEnabled;
+
+  final _api = FirebaseAppHostApi();
 
   /// Returns whether automatic data collection enabled or disabled.
   @override
@@ -47,10 +49,7 @@ class MethodChannelFirebaseApp extends FirebaseAppPlatform {
       return;
     }
 
-    await MethodChannelFirebase.channel.invokeMethod<void>(
-      'FirebaseApp#delete',
-      <String, dynamic>{'appName': name, 'options': options.asMap},
-    );
+    await _api.delete(name);
 
     MethodChannelFirebase.appInstances.remove(name);
     FirebasePluginPlatform._constantsForPluginApps.remove(name);
@@ -60,11 +59,7 @@ class MethodChannelFirebaseApp extends FirebaseAppPlatform {
   /// Sets whether automatic data collection is enabled or disabled.
   @override
   Future<void> setAutomaticDataCollectionEnabled(bool enabled) async {
-    assert(enabled != null);
-    await MethodChannelFirebase.channel.invokeMethod<void>(
-      'FirebaseApp#setAutomaticDataCollectionEnabled',
-      <String, dynamic>{'appName': name, 'enabled': enabled},
-    );
+    await _api.setAutomaticDataCollectionEnabled(name, enabled);
 
     _isAutomaticDataCollectionEnabled = enabled;
   }
@@ -72,10 +67,6 @@ class MethodChannelFirebaseApp extends FirebaseAppPlatform {
   /// Sets whether automatic resource management is enabled or disabled.
   @override
   Future<void> setAutomaticResourceManagementEnabled(bool enabled) async {
-    assert(enabled != null);
-    await MethodChannelFirebase.channel.invokeMethod<void>(
-      'FirebaseApp#setAutomaticResourceManagementEnabled',
-      <String, dynamic>{'appName': name, 'enabled': enabled},
-    );
+    await _api.setAutomaticResourceManagementEnabled(name, enabled);
   }
 }
